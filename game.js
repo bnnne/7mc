@@ -3,32 +3,6 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
-function playClickSound() {
-    const clickSound = document.getElementById('clickSound');
-    clickSound.currentTime = 0; // Reset audio to start
-    clickSound.play().catch(error => {
-        // Handle browser autoplay policies
-        console.log("Audio play failed:", error);
-    });
-}
-
-function toggleWord(word, element) {
-    if (!gameActive) return;
-    
-    const index = selectedWords.indexOf(word);
-    if (index === -1) {
-        if (selectedWords.length < 4) {
-            selectedWords.push(word);
-            element.classList.add('selected');
-            playClickSound(); // <-- Add this
-        }
-    } else {
-        selectedWords.splice(index, 1);
-        element.classList.remove('selected');
-        playClickSound(); // <-- Add this
-    }
-}
-
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
