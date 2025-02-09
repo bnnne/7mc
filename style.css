@@ -25,19 +25,33 @@ h1 {
     font-family: 'Minecraftia', Arial, sans-serif;
 }
 
-/* Ensure word boxes are the same size and text is centered */
+/* Word Boxes */
 #gameGrid {
-  /* Ensure equal column widths */
-  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Force equal width columns */
-  width: 800px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 800px;
+}
+
+/* Add this to ensure consistent box sizing */
+.word-box, .category-box {
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
 }
 
 .word-box {
-  height: 80px; /* Replace min-height with fixed height */
-  overflow: hidden; /* Prevent text overflow */
-  white-space: normal; /* Allow text to wrap */
-  word-wrap: break-word; /* Break long words */
-  padding: 10px; /* Reduce padding if needed */
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Vertically center text */
+    justify-content: center; /* Horizontally center text */
+    height: 100px; /* Fixed height for all word boxes */
+    min-width: 0; /* Prevents boxes from expanding due to long text */
 }
 
 .word-box.selected {
@@ -45,22 +59,40 @@ h1 {
     color: white;
 }
 
-/* Ensure category boxes match the height and spacing of word boxes */
+/* Update the categories container to use grid layout */
 #categoriesContainer {
-    width: 800px;
-    margin-bottom: 20px;
+  width: 800px;
+  margin-bottom: 20px;
+  display: grid; /* Use grid for consistent spacing */
+  grid-template-columns: 1fr; /* Single column */
+  gap: 10px; /* Match the 10px gap of the word grid */
 }
 
+/* Category Boxes */
 .category-box {
-  height: 80px; /* Replace min-height with fixed height */
-  overflow: hidden; /* Prevent overflow */
-  white-space: normal; 
-  word-wrap: break-word;
+  color: black;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* Exact same height as word boxes */
+  min-width: 0; /* Prevent overflow */
+  box-sizing: border-box; /* Include padding in height */
+  margin: 0; /* Remove default margins (now handled by grid gap) */
 }
 
 .category-box div:first-child {
-    font-weight: bold; /* Bold the category name */
-    margin-bottom: 10px; /* Add spacing between the name and the words */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Ensure category boxes match word box spacing */
+.category-box + .category-box {
+    margin-top: 10px; /* Match the gap between word boxes */
 }
 
 #triesContainer {
@@ -87,19 +119,12 @@ h1 {
     background-color: white;
 }
 
-/* Fix buttons at the bottom of the page */
 #buttons {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
-    position: fixed; /* Fix buttons at the bottom */
-    bottom: 20px; /* Distance from the bottom */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for exact centering */
-    z-index: 10; /* Ensure buttons are above other content */
 }
 
-/* Ensure button text is centered vertically and horizontally */
 button {
     padding: 10px 20px;
     cursor: pointer;
@@ -107,10 +132,6 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    min-width: 120px; /* Optional: Set a minimum width for buttons */
 }
 
 #message {
