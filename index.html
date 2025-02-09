@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connections (Minecraft Edition)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Connections (Minecraft Edition)</h1>
+    <div id="categoriesContainer"></div>
+    <div id="gameGrid"></div>
+    <div id="triesContainer">
+        <p>Tries remaining</p>
+        <div id="triesCircles">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+    <div id="buttons">
+        <button onclick="shuffleWords()">Shuffle</button>
+        <button onclick="deselectAll()">Deselect all</button>
+        <button onclick="submitGroup()">Submit</button>
+    </div>
+    <div id="message"></div>
+    <script src="config.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
