@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'Minecraftia';
+    src: url('Minecraftia-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Minecraftia', Arial, sans-serif; /* Fallback to Arial if Minecraftia fails to load */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-family: 'Minecraftia', Arial, sans-serif; /* Apply Minecraft font to h1 */
+    color: #333;
+    margin-bottom: 30px;
+}
+
+* {
+    font-family: 'Minecraftia', Arial, sans-serif;
+}
+
+#gameGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 800px;
+}
+
+.word-box {
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.word-box.selected {
+    background-color: #333;
+    color: white;
+}
+
+#categoriesContainer {
+    width: 800px;
+    margin-bottom: 20px;
+}
+
+.category-box {
+    color: black; /* Set text color to black */
+    padding: 15px;
+    margin: 5px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: normal; /* Default font weight for the words */
+}
+
+.category-box div:first-child {
+    font-weight: bold; /* Bold the category name */
+    margin-bottom: 10px; /* Add spacing between the name and the words */
+}
+
+#triesContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#triesCircles {
+    display: flex;
+    gap: 5px;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    background-color: #333;
+}
+
+.circle.white {
+    background-color: white;
+}
+
+#buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#message {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+#message .category-box {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    color: black; /* Ensure text is black */
+}
+
+#message .category-box div:first-child {
+    font-weight: bold; /* Bold the category name */
+    margin-bottom: 5px; /* Add spacing between the name and the words */
+}
+
+.category-box.purple { background-color: #B981C5; }
+.category-box.blue { background-color: #B0C3EF; }
+.category-box.green { background-color: #A1C35B; }
+.category-box.yellow { background-color: #F8DF6B; }
