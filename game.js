@@ -3,46 +3,29 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
-function playSoundAndShuffle() {
-    const selectSound = document.getElementById('selectSound');
-    selectSound.currentTime = 0;
-    selectSound.play();
-    shuffleWords();
-}
-
-function playSoundAndDeselectAll() {
-    const deselectSound = document.getElementById('deselectSound');
-    deselectSound.currentTime = 0;
-    deselectSound.play();
-    deselectAll();
-}
-
-function playSoundAndSubmitGroup() {
-    const selectSound = document.getElementById('selectSound');
-    selectSound.currentTime = 0;
-    selectSound.play();
-    submitGroup();
+function playClickSound() {
+    const clickSound = document.getElementById('clickSound');
+    clickSound.currentTime = 0; // Reset audio to start
+    clickSound.play().catch(error => {
+        // Handle browser autoplay policies
+        console.log("Audio play failed:", error);
+    });
 }
 
 function toggleWord(word, element) {
     if (!gameActive) return;
-
-    const selectSound = document.getElementById('selectSound');
-    const deselectSound = document.getElementById('deselectSound');
-
+    
     const index = selectedWords.indexOf(word);
     if (index === -1) {
         if (selectedWords.length < 4) {
             selectedWords.push(word);
             element.classList.add('selected');
-            selectSound.currentTime = 0; // Reset sound to start
-            selectSound.play(); // Play select sound
+            playClickSound(); // <-- Add this
         }
     } else {
         selectedWords.splice(index, 1);
         element.classList.remove('selected');
-        deselectSound.currentTime = 0; // Reset sound to start
-        deselectSound.play(); // Play deselect sound
+        playClickSound(); // <-- Add this
     }
 }
 
