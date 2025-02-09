@@ -3,7 +3,6 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
-// Function to play a sound
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
@@ -12,7 +11,6 @@ function playSound(soundId) {
     }
 }
 
-// Update toggleWord function to play sounds
 function toggleWord(word, element) {
     if (!gameActive) return;
 
