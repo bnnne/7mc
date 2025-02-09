@@ -3,6 +3,26 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
+// Add this at the top of your game.js file
+const selectSound = new Audio('button-click.mp3'); // Reference the uploaded audio file
+
+function toggleWord(word, element) {
+    if (!gameActive) return;
+
+    const index = selectedWords.indexOf(word);
+    if (index === -1) {
+        if (selectedWords.length < 4) {
+            selectedWords.push(word);
+            element.classList.add('selected');
+            selectSound.play(); // Play sound when a word is selected
+        }
+    } else {
+        selectedWords.splice(index, 1);
+        element.classList.remove('selected');
+        selectSound.play(); // Play sound when a word is deselected
+    }
+}
+
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
