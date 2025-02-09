@@ -6,19 +6,22 @@ let categoriesSolved = 0;
 function toggleWord(word, element) {
     if (!gameActive) return;
 
-    const clickSound = document.getElementById('clickSound');
-    clickSound.currentTime = 0; // Reset the sound to the start
-    clickSound.play(); // Play the sound
+    const selectSound = document.getElementById('selectSound');
+    const deselectSound = document.getElementById('deselectSound');
 
     const index = selectedWords.indexOf(word);
     if (index === -1) {
         if (selectedWords.length < 4) {
             selectedWords.push(word);
             element.classList.add('selected');
+            selectSound.currentTime = 0; // Reset sound to start
+            selectSound.play(); // Play select sound
         }
     } else {
         selectedWords.splice(index, 1);
         element.classList.remove('selected');
+        deselectSound.currentTime = 0; // Reset sound to start
+        deselectSound.play(); // Play deselect sound
     }
 }
 
