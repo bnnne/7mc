@@ -27,26 +27,17 @@ h1 {
 
 /* Ensure word boxes are the same size and text is centered */
 #gameGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-    width: 800px;
+  /* Ensure equal column widths */
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Force equal width columns */
+  width: 800px;
 }
 
 .word-box {
-    background-color: white;
-    border: 2px solid #ccc;
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 5px;
-    user-select: none;
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    min-height: 80px; /* Set a fixed height for all boxes */
-    box-sizing: border-box; /* Ensure padding is included in the height */
+  height: 80px; /* Replace min-height with fixed height */
+  overflow: hidden; /* Prevent text overflow */
+  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word; /* Break long words */
+  padding: 10px; /* Reduce padding if needed */
 }
 
 .word-box.selected {
@@ -61,18 +52,10 @@ h1 {
 }
 
 .category-box {
-    color: black;
-    padding: 15px;
-    margin: 5px 0;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: normal;
-    display: flex; /* Use flexbox for centering */
-    flex-direction: column; /* Stack category name and words vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    min-height: 80px; /* Match the height of word boxes */
-    box-sizing: border-box; /* Ensure padding is included in the height */
+  height: 80px; /* Replace min-height with fixed height */
+  overflow: hidden; /* Prevent overflow */
+  white-space: normal; 
+  word-wrap: break-word;
 }
 
 .category-box div:first-child {
