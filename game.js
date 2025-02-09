@@ -3,6 +3,27 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
+function playSoundAndShuffle() {
+    const selectSound = document.getElementById('selectSound');
+    selectSound.currentTime = 0;
+    selectSound.play();
+    shuffleWords();
+}
+
+function playSoundAndDeselectAll() {
+    const deselectSound = document.getElementById('deselectSound');
+    deselectSound.currentTime = 0;
+    deselectSound.play();
+    deselectAll();
+}
+
+function playSoundAndSubmitGroup() {
+    const selectSound = document.getElementById('selectSound');
+    selectSound.currentTime = 0;
+    selectSound.play();
+    submitGroup();
+}
+
 function toggleWord(word, element) {
     if (!gameActive) return;
 
