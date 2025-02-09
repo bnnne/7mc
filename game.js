@@ -3,6 +3,40 @@ let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
 
+// Function to play a sound
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    if (sound) {
+        sound.currentTime = 0; // Reset sound to the start
+        sound.play();
+    }
+}
+
+// Update toggleWord function to play sounds
+function toggleWord(word, element) {
+    if (!gameActive) return;
+
+    const index = selectedWords.indexOf(word);
+    if (index === -1) {
+        if (selectedWords.length < 4) {
+            selectedWords.push(word);
+            element.classList.add('selected');
+            playSound('selectSound'); // Play sound when selecting a word
+        }
+    } else {
+        selectedWords.splice(index, 1);
+        element.classList.remove('selected');
+        playSound('deselectSound'); // Play sound when deselecting a word
+    }
+}
+
+// Update button event listeners to play sounds
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+        playSound('clickSound'); // Play sound when clicking any button
+    });
+});
+
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
