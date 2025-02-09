@@ -25,6 +25,7 @@ h1 {
     font-family: 'Minecraftia', Arial, sans-serif;
 }
 
+/* Ensure word boxes are the same size and text is centered */
 #gameGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -41,6 +42,11 @@ h1 {
     cursor: pointer;
     border-radius: 5px;
     user-select: none;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    min-height: 80px; /* Set a fixed height for all boxes */
+    box-sizing: border-box; /* Ensure padding is included in the height */
 }
 
 .word-box.selected {
@@ -48,18 +54,25 @@ h1 {
     color: white;
 }
 
+/* Ensure category boxes match the height and spacing of word boxes */
 #categoriesContainer {
     width: 800px;
     margin-bottom: 20px;
 }
 
 .category-box {
-    color: black; /* Set text color to black */
+    color: black;
     padding: 15px;
     margin: 5px 0;
     border-radius: 5px;
     text-align: center;
-    font-weight: normal; /* Default font weight for the words */
+    font-weight: normal;
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack category name and words vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    min-height: 80px; /* Match the height of word boxes */
+    box-sizing: border-box; /* Ensure padding is included in the height */
 }
 
 .category-box div:first-child {
@@ -91,12 +104,19 @@ h1 {
     background-color: white;
 }
 
+/* Fix buttons at the bottom of the page */
 #buttons {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    position: fixed; /* Fix buttons at the bottom */
+    bottom: 20px; /* Distance from the bottom */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for exact centering */
+    z-index: 10; /* Ensure buttons are above other content */
 }
 
+/* Ensure button text is centered vertically and horizontally */
 button {
     padding: 10px 20px;
     cursor: pointer;
@@ -104,6 +124,10 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    min-width: 120px; /* Optional: Set a minimum width for buttons */
 }
 
 #message {
