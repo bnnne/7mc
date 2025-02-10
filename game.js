@@ -11,6 +11,13 @@ function playSound(soundId) {
     }
 }
 
+// Initialize button click sounds (re-added!)
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+        playSound('clickSound'); // Play sound when clicking any button
+    });
+});
+
 function toggleWord(word, element) {
     if (!gameActive) return;
 
