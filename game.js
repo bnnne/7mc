@@ -179,16 +179,5 @@ function shuffleArray(array) {
     }
 }
 
-function resetGame() {
-    selectedWords = [];
-    remainingTries = 4;
-    gameActive = true;
-    categoriesSolved = 0;
-    document.getElementById('message').textContent = '';
-    document.getElementById('categoriesContainer').innerHTML = '';
-    initializeGame();
-    updateTriesDisplay();
-}
-
 // Initialize game on load
 window.onload = initializeGame;
