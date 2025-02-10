@@ -7,7 +7,7 @@ function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
         sound.currentTime = 0; // Reset sound to the start
-        sound.play();
+        sound.play().catch(error => console.error(`Error playing sound: ${error}`));
     }
 }
 
@@ -28,13 +28,6 @@ function toggleWord(word, element) {
     }
 }
 
-// Update button event listeners to play sounds
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => {
-        playSound('clickSound'); // Play sound when clicking any button
-    });
-});
-
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
@@ -47,26 +40,18 @@ function initializeGame() {
         const box = document.createElement('div');
         box.className = 'word-box';
         box.textContent = word;
+        box.setAttribute('role', 'button');
+        box.setAttribute('tabindex', '0');
         box.onclick = () => toggleWord(word, box);
+        box.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                toggleWord(word, box);
+            }
+        });
         gameGrid.appendChild(box);
     });
     
     updateTriesDisplay();
-}
-
-function toggleWord(word, element) {
-    if (!gameActive) return;
-    
-    const index = selectedWords.indexOf(word);
-    if (index === -1) {
-        if (selectedWords.length < 4) {
-            selectedWords.push(word);
-            element.classList.add('selected');
-        }
-    } else {
-        selectedWords.splice(index, 1);
-        element.classList.remove('selected');
-    }
 }
 
 function submitGroup() {
@@ -185,6 +170,17 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+function resetGame() {
+    selectedWords = [];
+    remainingTries = 4;
+    gameActive = true;
+    categoriesSolved = 0;
+    document.getElementById('message').textContent = '';
+    document.getElementById('categoriesContainer').innerHTML = '';
+    initializeGame();
+    updateTriesDisplay();
 }
 
 // Initialize game on load
