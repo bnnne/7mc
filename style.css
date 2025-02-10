@@ -74,7 +74,7 @@ h1 {
   margin-bottom: 20px;
   display: grid; /* Use grid for consistent spacing */
   grid-template-columns: 1fr; /* Single column */
-  gap: 10px; /* Match the 10px gap of the word grid */
+  gap: 5px; /* Match the 10px gap of the word grid */
 }
 
 /* Category Boxes */
