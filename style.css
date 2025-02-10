@@ -88,7 +88,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 150px; /* Exact same height as word boxes */
+  height: 120px; /* Exact same height as word boxes */
   min-width: 0; /* Prevent overflow */
   box-sizing: border-box; /* Include padding in height */
   margin: 0; /* Remove default margins (now handled by grid gap) */
@@ -101,7 +101,7 @@ h1 {
 
 /* Ensure category boxes match word box spacing */
 .category-box + .category-box {
-    margin-top: 10px; /* Match the gap between word boxes */
+    margin-top: 8px; /* Match the gap between word boxes */
 }
 
 #triesContainer {
