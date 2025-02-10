@@ -104,16 +104,27 @@ h1 {
     margin-top: 8px; /* Match the gap between word boxes */
 }
 
+/* Tries Container */
 #triesContainer {
     display: flex;
-    align-items: center;
+    align-items: center; /* Vertically center the text and circles */
     gap: 10px;
     margin-bottom: 20px;
 }
 
+/* Tries Text */
+#triesContainer p {
+    margin: 0; /* Remove default margin */
+    line-height: 1; /* Set line height to match the circles */
+    display: flex;
+    align-items: center; /* Vertically center the text */
+}
+
+/* Tries Circles */
 #triesCircles {
     display: flex;
     gap: 5px;
+    align-items: center; /* Vertically center the circles */
 }
 
 .circle {
