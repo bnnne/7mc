@@ -88,7 +88,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 120px; /* Exact same height as word boxes */
+  height: 110px; /* Exact same height as word boxes */
   min-width: 0; /* Prevent overflow */
   box-sizing: border-box; /* Include padding in height */
   margin: 0; /* Remove default margins (now handled by grid gap) */
