@@ -2,26 +2,26 @@ const categoryPriority = ['purple', 'blue', 'green', 'yellow'];
 
 const categories = {
     purple: {
-        name: "unstackable items",
-        words: ["bed", "elytra", "shulker box", "potion of fire resistance"],
+        name: "items given in a cleric trade table",
+        words: ["glowstone", "lapis lazuli", "ender pearl", "bottle o' enchanting"],
         color: "purple",
         solved: false
     },
     blue: {
-        name: "piglin bartering experience",
-        words: ["piglin", "gold", "ender pearls", "obsidian"],
+        name: "animated blocks",
+        words: ["sea lantern", "sculk", "stone cutter", "redstone ore"],
         color: "blue",
         solved: false
     },
     green: {
-        name: "can be fed into a beacon",
-        words: ["netherite ingot", "iron ingot", "diamond", "emerald"],
+        name: "things that give status effects, not from a potion",
+        words: ["beacon", "shulker", "witch", "command block"],
         color: "green",
         solved: false
     },
     yellow: {
-        name: "biomes/dimensions that can't rain",
-        words: ["desert", "savanna", "the nether", "the end"],
+        name: "can be added to water bottle",
+        words: ["netherwart", "gunpowder", "glowstone dust", "redstone dust"],
         color: "yellow",
         solved: false
     }
