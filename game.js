@@ -1,7 +1,12 @@
 let selectedWords = [];
+
 let remainingTries = 4;
+const hearts = document.querySelectorAll('.circle');
+
 let gameActive = true;
+
 let categoriesSolved = 0;
+// Initialize tries (assuming 4 hearts)
 
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
@@ -138,6 +143,12 @@ function handleIncorrectSubmit() {
         document.getElementById('message').textContent = "you were prob close lol..... or not";
         revealAnswers(); // Reveal answers in the grid
     }
+}
+
+// When making a mistake
+function handleMistake() {
+    remainingTries--;
+    hearts[hearts.length - (4 - remainingTries)].classList.add('empty');
 }
 
 function updateTriesDisplay() {
