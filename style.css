@@ -182,7 +182,27 @@ button {
     margin-bottom: 5px; /* Add spacing between the name and the words */
 }
 
-.category-box.purple { background-color: #B981C5; }
-.category-box.blue { background-color: #B0C3EF; }
-.category-box.green { background-color: #A1C35B; }
-.category-box.yellow { background-color: #F8DF6B; }
+/* category boxes */
+.category-box.purple { 
+    background-image: url('purple-cc.png');
+    background-repeat: repeat;
+    background-size: 110px 110px; /* Match category box height */
+}
+
+.category-box.blue {
+    background-image: url('blue-cc.png');
+    background-repeat: repeat;
+    background-size: 110px 110px;
+}
+
+.category-box.green {
+    background-image: url('green-cc.png');
+    background-repeat: repeat;
+    background-size: 110px 110px;
+}
+
+.category-box.yellow {
+    background-image: url('yellow-cc.png');
+    background-repeat: repeat;
+    background-size: 110px 110px;
+}
