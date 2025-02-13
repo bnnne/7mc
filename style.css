@@ -78,33 +78,39 @@ h1 {
 
 /* Update the categories container to use grid layout */
 #categoriesContainer {
-  width: 800px;
-  margin-bottom: 20px;
-  display: grid; /* Use grid for consistent spacing */
-  grid-template-columns: 1fr; /* Single column */
-  gap: 10px; /* Match the 10px gap of the word grid */
+    width: 800px;
+    margin-bottom: 20px;
+    display: grid; /* Use grid for consistent spacing */
+    grid-template-columns: 1fr; /* Single column */
+    gap: 10px; /* Match the 10px gap of the word grid */
 }
 
 /* Category Boxes */
 .category-box {
-  color: black;
-  padding: 15px;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: normal;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 110px; /* Exact same height as word boxes */
-  min-width: 0; /* Prevent overflow */
-  box-sizing: border-box; /* Include padding in height */
-  margin: 0; /* Remove default margins (now handled by grid gap) */
+    color: white; /* Changed from black to white */
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 110px; /* Exact same height as word boxes */
+    min-width: 0; /* Prevent overflow */
+    box-sizing: border-box; /* Include padding in height */
+    margin: 0; /* Remove default margins (now handled by grid gap) */
+    background-repeat: repeat; /* Changed from default */
+    background-size: auto; /* Maintain original image size */
+    background-position: left top; /* Start tiling from top-left */
+    position: relative; /* For potential overlay */
 }
 
 .category-box div:first-child {
     font-weight: bold;
     margin-bottom: 10px;
+    /* Optional: add text shadow for better contrast */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Ensure category boxes match word box spacing */
@@ -174,7 +180,6 @@ button {
     padding: 10px;
     border-radius: 5px;
     text-align: center;
-    color: black; /* Ensure text is black */
 }
 
 #message .category-box div:first-child {
@@ -182,27 +187,36 @@ button {
     margin-bottom: 5px; /* Add spacing between the name and the words */
 }
 
-/* category boxes */
+/* Add semi-transparent white overlay for better readability */
+.category-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay instead of white */
+    z-index: 1;
+}
+
+/* Move text to foreground */
+.category-box div {
+    position: relative;
+    z-index: 2;
+}
+
 .category-box.purple { 
     background-image: url('purple-cc.png');
-    background-repeat: repeat;
-    background-size: 110px 110px; /* Match category box height */
 }
 
-.category-box.blue {
+.category-box.blue { 
     background-image: url('blue-cc.png');
-    background-repeat: repeat;
-    background-size: 110px 110px;
 }
 
-.category-box.green {
+.category-box.green { 
     background-image: url('green-cc.png');
-    background-repeat: repeat;
-    background-size: 110px 110px;
 }
 
-.category-box.yellow {
+.category-box.yellow { 
     background-image: url('yellow-cc.png');
-    background-repeat: repeat;
-    background-size: 110px 110px;
 }
