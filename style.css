@@ -104,6 +104,10 @@ h1 {
     background-size: auto; /* Maintain original image size */
     background-position: left top; /* Start tiling from top-left */
     position: relative; /* For potential overlay */
+    background-repeat: repeat-x; /* Repeat horizontally */
+    background-size: auto 100%; /* Full height, auto width */
+    background-position: left top;
+    position: relative
 }
 
 .category-box div:first-child {
@@ -195,7 +199,7 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay instead of white */
+    /* background: rgba(0, 0, 0, 0.5); /* Dark overlay instead of white */
     z-index: 1;
 }
 
@@ -203,20 +207,11 @@ button {
 .category-box div {
     position: relative;
     z-index: 2;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Stronger text shadow */
 }
 
-.category-box.purple { 
-    background-image: url('purple-cc.png');
-}
-
-.category-box.blue { 
-    background-image: url('blue-cc.png');
-}
-
-.category-box.green { 
-    background-image: url('green-cc.png');
-}
-
-.category-box.yellow { 
-    background-image: url('yellow-cc.png');
-}
+.category-box.purple { background-image: url('purple-cc.png'); }
+.category-box.blue { background-image: url('blue-cc.png'); }
+.category-box.green { background-image: url('green-cc.png'); }
+.category-box.yellow { background-image: url('yellow-cc.png'); }
