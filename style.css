@@ -188,10 +188,9 @@ button {
 
 #message .category-box div:first-child {
     font-weight: bold; /* Bold the category name */
-    margin-bottom: 5px; /* Add spacing between the name and the words */
+    margin-bottom: 8px; /* Add spacing between the name and the words */
 }
 
-/* Add semi-transparent white overlay for better readability */
 .category-box::after {
     content: '';
     position: absolute;
@@ -199,7 +198,7 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
     z-index: 1;
 }
 
