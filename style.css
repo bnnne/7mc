@@ -1,12 +1,19 @@
 @font-face {
-    font-family: 'Minecraftia';
-    src: url('Minecraftia-Regular.ttf') format('truetype');
+    font-family: 'Minecraft';
+    src: url('MinecraftRegular-Bmg3.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Minecraft';
+    src: url('MinecraftBold-nMK1.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 body {
-    font-family: 'Minecraftia', Arial, sans-serif; /* Fallback to Arial if Minecraftia fails to load */
+    font-family: 'Minecraft', Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,13 +23,14 @@ body {
 }
 
 h1 {
-    font-family: 'Minecraftia', Arial, sans-serif; /* Apply Minecraft font to h1 */
+    font-family: 'Minecraft', Arial, sans-serif;
     color: #333;
     margin-bottom: 30px;
+    font-weight: bold; /* This will now use the MinecraftBold font */
 }
 
 * {
-    font-family: 'Minecraftia', Arial, sans-serif;
+    font-family: 'Minecraft', Arial, sans-serif;
 }
 
 /* Word Boxes */
