@@ -136,15 +136,30 @@ h1 {
 }
 
 .circle {
-    width: 24px; /* Slightly larger to accommodate heart shape */
+    width: 24px;
     height: 24px;
     background-image: url('heart-container.png');
     background-size: contain;
     background-repeat: no-repeat;
+    position: relative; /* Needed for absolute positioning of full heart */
 }
 
-.circle.white {
+/* Full heart as a pseudo-element */
+.circle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('heart-full.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Class to hide the full heart */
+.circle.empty::after {
+    display: none;
 }
 
 #buttons {
