@@ -1,7 +1,6 @@
 let selectedWords = [];
 
 let remainingTries = 4;
-const hearts = document.querySelectorAll('.circle');
 
 let gameActive = true;
 
@@ -13,7 +12,7 @@ function playSound(soundId) {
     if (sound) {
         sound.currentTime = 0; // Reset sound to the start
         sound.play().catch(error => console.error(`Error playing sound: ${error}`));
-    }
+
 }
 
 // Initialize button click sounds (re-added!)
@@ -145,17 +144,11 @@ function handleIncorrectSubmit() {
     }
 }
 
-// When making a mistake
-function handleMistake() {
-    remainingTries--;
-    hearts[hearts.length - (4 - remainingTries)].classList.add('empty');
-}
-
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach((circle, index) => {
-        // Turn circles white from right to left
-        circle.classList.toggle('white', index >= remainingTries);
+        // Reverse the logic: white class means lost heart
+        circle.classList.toggle('white', index >= (4 - remainingTries));
     });
 }
 
