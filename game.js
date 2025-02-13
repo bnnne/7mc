@@ -95,6 +95,7 @@ function handleCorrectCategory(category) {
         <div>${category.words.join(', ')}</div>
     `;
     document.getElementById('categoriesContainer').appendChild(categoryBox);
+    playSound(`${category.color}-categ`); // Add this line
 
     // Remove words from grid
     const gameGrid = document.getElementById('gameGrid');
@@ -129,6 +130,7 @@ function revealAnswers() {
                 <div>${category.words.join(', ')}</div>
             `;
             document.getElementById('categoriesContainer').appendChild(categoryBox);
+            playSound(`${category.color}-categ`);
         }, index * 1000); // 1-second delay between each category
     });
 }
