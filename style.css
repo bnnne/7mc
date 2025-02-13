@@ -132,19 +132,19 @@ h1 {
 #triesCircles {
     display: flex;
     gap: 5px;
-    align-items: center; /* Vertically center the circles */
+    align-items: center;
 }
 
 .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #333;
-    background-color: #333;
+    width: 24px; /* Slightly larger to accommodate heart shape */
+    height: 24px;
+    background-image: url('heart-container.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .circle.white {
-    background-color: white;
+    background-image: url('heart-full.png');
 }
 
 #buttons {
