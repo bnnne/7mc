@@ -10,10 +10,10 @@ let categoriesSolved = 0;
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
-        sound.currentTime = 0; // Reset sound to the start
+        sound.currentTime = 0;
         sound.play().catch(error => console.error(`Error playing sound: ${error}`));
-
-}
+    } 
+} 
 
 // Initialize button click sounds (re-added!)
 document.querySelectorAll('button').forEach(button => {
@@ -147,8 +147,8 @@ function handleIncorrectSubmit() {
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach((circle, index) => {
-        // Reverse the logic: white class means lost heart
-        circle.classList.toggle('white', index >= (4 - remainingTries));
+        // Corrected logic: remove hearts from right to left
+        circle.classList.toggle('white', index >= remainingTries);
     });
 }
 
