@@ -271,8 +271,8 @@ button:active {
     bottom: 0; /* Place at the bottom */
     left: 0;
     width: 100%; /* Full width */
-    height: auto; /* Adjust height automatically */
-    background-image: url('fire.png');
+    height: 150px; /* Adjust height as needed */
+    background-image: url('fire.png'); /* Path to your fire image */
     background-size: cover; /* Ensure the image covers the width */
     background-position: bottom; /* Align to the bottom */
     z-index: 1000; /* Ensure it's on top of everything */
