@@ -182,17 +182,18 @@ h1 {
     75% { transform: translateY(-2px); }
 }
 
+/* Unified shake animation for all hearts */
 .circle.shake {
     animation: gentle-shake 0.4s infinite;
     transform-origin: center bottom;
 }
 
+/* Remove separate white.shake animation */
 .circle.white.shake {
-    animation: shake 0.5s infinite;
-    animation-delay: var(--delay);
+    animation: gentle-shake 0.4s infinite;
 }
 
-/* Staggered timing */
+/* Staggered timing for all shake elements */
 .circle.shake:nth-child(1) { animation-delay: 0s; }
 .circle.shake:nth-child(2) { animation-delay: 0.1s; }
 .circle.shake:nth-child(3) { animation-delay: 0.2s; }
