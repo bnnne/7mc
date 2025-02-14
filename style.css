@@ -216,15 +216,13 @@ button {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     background: url('button.png') center/cover no-repeat;
     background-size: 100% 100%;
-    image-rendering: pixelated; /* For retro Minecraft-style scaling */
-    border: 2px solid transparent; /* Maintain border spacing */
+    image-rendering: pixelated;
+    border: 2px solid transparent;
 }
 
 button:hover {
     background-image: url('button-hover.png');
-    transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    /* Optional: Add slight brightness increase filter: brightness(1.1); */
 }
 
 button:active {
