@@ -80,7 +80,6 @@ h1 {
 .word-box:hover {
     border-color: #b026ff; /* Neon purple */
     box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
-    transform: scale(1.02); /* Optional: Keep slight scale effect */
 }
 
 .word-box.selected {
