@@ -208,9 +208,9 @@ h1 {
 }
 
 button {
-    /* Fixed size matching your image ratio */
-    width: 180px;  /* Scaled down from 955px */
-    height: 48px;  /* Scaled down from 255px (maintains original aspect ratio) */
+    /* Set your desired button size */
+    width: 200px;  /* Adjust this value as needed */
+    height: calc(200px * (255 / 955)); /* Maintain 955:255 aspect ratio */
     
     /* Image handling */
     background: url('button.png') center/contain no-repeat;
@@ -222,9 +222,8 @@ button {
     color: white;
     font-family: 'Minecraft', Arial, sans-serif;
     font-size: 1.1em;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background-image 0.2s ease;
 }
 
 button:hover {
