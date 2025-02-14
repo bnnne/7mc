@@ -17,19 +17,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f0f0f0;
     margin: 0;
     padding: 20px;
-    min-height: 100vh;
     background: url('bastion.png') no-repeat center center fixed;
     background-size: cover;
+    overflow: hidden; /* Prevent page extension */
+    height: 100vh; /* Use viewport height instead of min-height */
 }
 
 h1 {
     font-family: 'Minecraft', Arial, sans-serif;
-    color: #333;
+    color: white; /* Was #333 */
     margin-bottom: 30px;
     font-weight: bold; /* This will now use the MinecraftBold font */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -110,7 +111,6 @@ h1 {
     background-repeat: repeat-x; /* Repeat horizontally */
     background-size: auto 100%; /* Full height, auto width */
     background-position: left top;
-    position: relative
 }
 
 .category-box div:first-child {
