@@ -178,26 +178,28 @@ function revealAnswers() {
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
 
-    // Add blinking effect to all hearts
-    circles.forEach(circle => {
-        circle.classList.add('blink'); // Add blink class to all hearts
+    // Update the hearts to reflect the remaining tries
+    circles.forEach((circle, index) => {
+        if (index >= remainingTries) {
+            circle.classList.add('white'); // Transition to container
+            circle.classList.remove('shake'); // Remove shaking animation
+        } else {
+            circle.classList.remove('white'); // Ensure the heart is full
+        }
     });
 
-    // After a short delay, remove the blink effect and update the hearts
-    setTimeout(() => {
+    // Apply shaking animation if only one full heart remains
+    if (remainingTries === 1) {
         circles.forEach(circle => {
-            circle.classList.remove('blink'); // Remove blink class
-        });
-
-        // Update the hearts to reflect the remaining tries
-        circles.forEach((circle, index) => {
-            if (index >= remainingTries) {
-                circle.classList.add('white'); // Transition to container
-            } else {
-                circle.classList.remove('white'); // Ensure the heart is full
+            if (!circle.classList.contains('white')) {
+                circle.classList.add('shake'); // Add shaking animation
             }
         });
-    }, 200); // Adjust the duration of the blink effect
+    } else {
+        circles.forEach(circle => {
+            circle.classList.remove('shake'); // Remove shaking animation
+        });
+    }
 }
 
 // Shuffle words in the grid
