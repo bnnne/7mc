@@ -10,24 +10,20 @@ const soundFiles = [
     document.getElementById('hurtSound3')
 ];
 
-let currentSoundIndex = 0; // Track the current sound index
+let currentSoundIndex = 0;
 
 // Function to play the next sound effect for mistakes
 function playNextSound() {
     const sound = soundFiles[currentSoundIndex];
-    sound.currentTime = 0; // Reset the sound to the start
-    sound.play(); // Play the sound
-
-    // Update the index for the next sound
+    sound.currentTime = 0;
+    sound.play();
     currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
 }
 
-// Trigger on mistake
 function handleMistake() {
-    playNextSound(); // Play the next sound effect
+    playNextSound();
 }
 
-// Function to play a sound by ID
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
@@ -36,14 +32,12 @@ function playSound(soundId) {
     }
 }
 
-// Initialize button click sounds
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
-        playSound('clickSound'); // Play sound when clicking any button
+        playSound('clickSound');
     });
 });
 
-// Toggle word selection
 function toggleWord(word, element) {
     if (!gameActive) return;
 
@@ -52,21 +46,20 @@ function toggleWord(word, element) {
         if (selectedWords.length < 4) {
             selectedWords.push(word);
             element.classList.add('selected');
-            playSound('selectSound'); // Play sound when selecting a word
+            playSound('selectSound');
         }
     } else {
         selectedWords.splice(index, 1);
         element.classList.remove('selected');
-        playSound('deselectSound'); // Play sound when deselecting a word
+        playSound('deselectSound');
     }
 }
 
-// Initialize the game grid
+// Initialize the game grid (only one initializeGame function)
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
 
-    // Flatten all words and shuffle
     const allWords = [].concat(...Object.values(categories).map(c => c.words));
     shuffleArray(allWords);
 
@@ -85,10 +78,9 @@ function initializeGame() {
         gameGrid.appendChild(box);
     });
 
-    updateTriesDisplay(); // Initialize tries display
+    updateTriesDisplay();
 }
 
-// Submit selected words
 function submitGroup() {
     if (!gameActive || selectedWords.length !== 4) return;
 
@@ -104,15 +96,13 @@ function submitGroup() {
 
     selectedWords = [];
     deselectAll();
-    checkGameEnd(); // Check if the game is over
+    checkGameEnd();
 }
 
-// Handle correct category submission
 function handleCorrectCategory(category) {
-    category.solved = true; // Mark the category as solved
+    category.solved = true;
     categoriesSolved++;
 
-    // Move words to category display
     const categoryBox = document.createElement('div');
     categoryBox.className = `category-box ${category.color}`;
     categoryBox.innerHTML = `
@@ -120,9 +110,8 @@ function handleCorrectCategory(category) {
         <div>${category.words.join(', ')}</div>
     `;
     document.getElementById('categoriesContainer').appendChild(categoryBox);
-    playSound(`${category.color}-categ`); // Play category sound
+    playSound(`${category.color}-categ`);
 
-    // Remove words from grid
     const gameGrid = document.getElementById('gameGrid');
     Array.from(gameGrid.children).forEach(box => {
         if (category.words.includes(box.textContent)) {
@@ -131,29 +120,25 @@ function handleCorrectCategory(category) {
     });
 }
 
-// Handle incorrect submission
 function handleIncorrectSubmit() {
     remainingTries--;
     updateTriesDisplay();
-    handleMistake(); // Play mistake sound
+    handleMistake();
 
     if (remainingTries === 0) {
         gameActive = false;
         document.getElementById('message').textContent = "you were prob close lol..... or not";
-        revealAnswers(); // Reveal answers in the grid
+        revealAnswers();
     }
 }
 
-// Reveal unsolved categories
 function revealAnswers() {
     const unsolvedCategories = Object.values(categories)
         .filter(category => !category.solved)
         .sort((a, b) => categoryPriority.indexOf(a.color) - categoryPriority.indexOf(b.color));
 
-    // Reveal answers one by one in priority order
     unsolvedCategories.forEach((category, index) => {
         setTimeout(() => {
-            // Remove words from the grid
             const gameGrid = document.getElementById('gameGrid');
             Array.from(gameGrid.children).forEach(box => {
                 if (category.words.includes(box.textContent)) {
@@ -161,7 +146,6 @@ function revealAnswers() {
                 }
             });
 
-            // Add the category to the categoriesContainer
             const categoryBox = document.createElement('div');
             categoryBox.className = `category-box ${category.color}`;
             categoryBox.innerHTML = `
@@ -170,39 +154,19 @@ function revealAnswers() {
             `;
             document.getElementById('categoriesContainer').appendChild(categoryBox);
             playSound(`${category.color}-categ`);
-        }, index * 1000); // 1-second delay between each category
+        }, index * 1000);
     });
 }
 
-// Update tries display when a mistake is made
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
 
-    // Update the hearts to reflect the remaining tries
     circles.forEach((circle, index) => {
-        if (index >= remainingTries) {
-            circle.classList.add('white'); // Transition to container
-            circle.classList.remove('shake'); // Remove shaking animation
-        } else {
-            circle.classList.remove('white'); // Ensure the heart is full
-        }
+        circle.classList.toggle('white', index >= remainingTries);
+        circle.classList.toggle('shake', remainingTries === 1 && index < remainingTries);
     });
-
-    // Apply shaking animation if only one full heart remains
-    if (remainingTries === 1) {
-        circles.forEach(circle => {
-            if (!circle.classList.contains('white')) {
-                circle.classList.add('shake'); // Add shaking animation
-            }
-        });
-    } else {
-        circles.forEach(circle => {
-            circle.classList.remove('shake'); // Remove shaking animation
-        });
-    }
 }
 
-// Shuffle words in the grid
 function shuffleWords() {
     if (!gameActive) return;
 
@@ -213,7 +177,6 @@ function shuffleWords() {
     boxes.forEach(box => gameGrid.appendChild(box));
 }
 
-// Deselect all words
 function deselectAll() {
     selectedWords = [];
     document.querySelectorAll('.word-box').forEach(box => {
@@ -221,7 +184,6 @@ function deselectAll() {
     });
 }
 
-// Check if the game is over
 function checkGameEnd() {
     if (categoriesSolved === 4) {
         gameActive = false;
@@ -229,7 +191,6 @@ function checkGameEnd() {
     }
 }
 
-// Shuffle an array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -237,45 +198,14 @@ function shuffleArray(array) {
     }
 }
 
-// Example initializeGame function (ensure this is defined in your game.js)
-function initializeGame() {
-    const gameGrid = document.getElementById('gameGrid');
-    gameGrid.innerHTML = '';
-
-    // Flatten all words and shuffle
-    const allWords = [].concat(...Object.values(categories).map(c => c.words));
-    shuffleArray(allWords);
-
-    allWords.forEach(word => {
-        const box = document.createElement('div');
-        box.className = 'word-box';
-        box.textContent = word;
-        box.setAttribute('role', 'button');
-        box.setAttribute('tabindex', '0');
-        box.onclick = () => toggleWord(word, box);
-        box.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                toggleWord(word, box);
-            }
-        });
-        gameGrid.appendChild(box);
-    });
-
-    updateTriesDisplay(); // Initialize tries display
-}
-
-// Wait for the DOM to load
+// Start screen handling
 document.addEventListener('DOMContentLoaded', function () {
     const startScreen = document.getElementById('startScreen');
     const gameContent = document.getElementById('gameContent');
 
-    // When the start screen is clicked, hide it and show the game
     startScreen.addEventListener('click', function () {
-        startScreen.style.display = 'none'; // Hide the start screen
-        gameContent.style.display = 'block'; // Show the game content
-        initializeGame(); // Initialize the game
+        startScreen.style.display = 'none';
+        gameContent.style.display = 'block';
+        initializeGame();
     });
 });
-
-// Initialize game on load
-window.onload = initializeGame;
