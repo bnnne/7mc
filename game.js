@@ -121,15 +121,25 @@ function handleCorrectCategory(category) {
 }
 
 function handleIncorrectSubmit() {
+    const previousTries = remainingTries;
     remainingTries--;
-    updateTriesDisplay();
-    handleMistake();
+    
+    // Add blink to all hearts first
+    const circles = document.querySelectorAll('#triesCircles .circle');
+    circles.forEach(circle => circle.classList.add('blink'));
+    
+    // After blink duration, update display
+    setTimeout(() => {
+        circles.forEach(circle => circle.classList.remove('blink'));
+        updateTriesDisplay();
+        handleMistake();
 
-    if (remainingTries === 0) {
-        gameActive = false;
-        document.getElementById('message').textContent = "you were prob close lol..... or not";
-        revealAnswers();
-    }
+        if (remainingTries === 0) {
+            gameActive = false;
+            document.getElementById('message').textContent = "you were prob close lol..... or not";
+            revealAnswers();
+        }
+    }, 200);
 }
 
 function revealAnswers() {
@@ -162,8 +172,12 @@ function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
 
     circles.forEach((circle, index) => {
-        circle.classList.toggle('white', index >= remainingTries);
-        circle.classList.toggle('shake', remainingTries === 1 && index < remainingTries);
+        // Update heart states
+        const isLost = index >= remainingTries;
+        circle.classList.toggle('white', isLost);
+        
+        // Apply shake to all remaining hearts when only 1 try left
+        circle.classList.toggle('shake', remainingTries === 1 && !isLost);
     });
 }
 
