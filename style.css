@@ -53,8 +53,8 @@ h1 {
 
 .word-box {
     background: 
-        url('blackstone.png') center/cover, /* Background image */
-        rgba(255, 255, 255, 0.1); /* Fallback color */
+        url('blackstone.png') center/cover,
+        rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     padding: 15px;
     text-align: center;
@@ -64,14 +64,14 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px; /* Set equal width and height */
-    height: 100px; /* Maintain square shape */
+    width: 100px;
+    height: 100px;
     min-width: 0;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     transition: all 0.2s ease;
-    position: relative; /* Needed for overlay */
-    overflow: hidden; /* Keep overlay contained */
+    position: relative;
+    overflow: hidden;
 }
 
 .word-box::before {
@@ -81,18 +81,19 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 100, 100, 0); /* Start fully transparent */
+    background: rgba(138, 45, 56, 0);
     transition: background 0.2s ease;
     z-index: 1;
+    pointer-events: none;
 }
 
 .word-box:hover::before {
-    background: rgba(138, 45, 56, 0.3); /* Light reddish overlay */
+    background: rgba(138, 45, 56, 0.3);
 }
 
 .word-box > * {
     position: relative;
-    z-index: 2; /* Keep text above overlay */
+    z-index: 2;
 }
 
 /* Update the categories container to use grid layout */
