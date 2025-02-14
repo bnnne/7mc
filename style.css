@@ -41,9 +41,10 @@ h1 {
 #gameGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 5px; /* Reduced gap from 10px to 5px */
     margin-bottom: 20px;
     width: 800px;
+    margin: 0 auto; /* Center the grid horizontally */
 }
 
 /* Add this to ensure consistent box sizing */
