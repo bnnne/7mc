@@ -1,6 +1,6 @@
-const categoryPriority = ['purple', 'blue', 'green', 'yellow'];
+var categoryPriority = ['purple', 'blue', 'green', 'yellow'];
 
-const categories = {
+var categories = {
     purple: {
         name: "variants dependent on biome temperature",
         words: ["skeleton", "fox", "frog", "zombie"],
