@@ -184,7 +184,8 @@ h1 {
 
 .circle.shake {
     animation: shake 0.5s infinite;
-    animation-delay: var(--delay); /* Add this line */
+    animation-delay: var(--delay);
+    transform-origin: center bottom;
 }
 
 /* Buttons */
