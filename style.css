@@ -217,7 +217,6 @@ button {
     background: url('button.png') center/cover no-repeat;
     background-size: 100% 100%;
     image-rendering: pixelated;
-    border: 2px solid transparent;
 }
 
 button:hover {
