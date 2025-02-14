@@ -198,14 +198,7 @@ function shuffleArray(array) {
     }
 }
 
-// Start screen handling
-document.addEventListener('DOMContentLoaded', function () {
-    const startScreen = document.getElementById('startScreen');
-    const gameContent = document.getElementById('gameContent');
-
-    startScreen.addEventListener('click', function () {
-        startScreen.style.display = 'none';
-        gameContent.style.display = 'block';
-        initializeGame();
-    });
-});
+// Starts game as soon as window loads
+window.onload = function() {
+    initializeGame();
+};
