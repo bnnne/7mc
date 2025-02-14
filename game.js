@@ -174,21 +174,30 @@ function revealAnswers() {
     });
 }
 
-// Update tries display
+// Update tries display when a mistake is made
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
-    circles.forEach((circle, index) => {
-        if (index >= remainingTries) {
-            // Add blinking effect before transitioning to the container
-            circle.classList.add('blink'); // Add blink class
-            setTimeout(() => {
-                circle.classList.remove('blink'); // Remove blink class
-                circle.classList.add('white'); // Transition to container
-            }, 200); // Adjust the duration of the blink effect
-        } else {
-            circle.classList.remove('white'); // Ensure the heart is full
-        }
+
+    // Add blinking effect to all hearts
+    circles.forEach(circle => {
+        circle.classList.add('blink'); // Add blink class to all hearts
     });
+
+    // After a short delay, remove the blink effect and update the hearts
+    setTimeout(() => {
+        circles.forEach(circle => {
+            circle.classList.remove('blink'); // Remove blink class
+        });
+
+        // Update the hearts to reflect the remaining tries
+        circles.forEach((circle, index) => {
+            if (index >= remainingTries) {
+                circle.classList.add('white'); // Transition to container
+            } else {
+                circle.classList.remove('white'); // Ensure the heart is full
+            }
+        });
+    }, 200); // Adjust the duration of the blink effect
 }
 
 // Shuffle words in the grid
