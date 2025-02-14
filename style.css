@@ -188,6 +188,11 @@ h1 {
     transform-origin: center bottom;
 }
 
+.circle.white.shake {
+    animation: shake 0.5s infinite;
+    animation-delay: var(--delay);
+}
+
 /* Buttons */
 #buttons {
     display: flex;
