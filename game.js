@@ -175,13 +175,10 @@ function revealAnswers() {
 
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
-    
-    circles.forEach((circle, index) => {
-        const isLost = index >= remainingTries;
-        circle.classList.toggle('white', isLost);
-        
-        // Shake ALL hearts (including empty containers) when 1 try remains
-        circle.classList.toggle('shake', remainingTries === 1);
+    circles.forEach(circle => {
+        const shouldShake = remainingTries === 1;
+        circle.classList.toggle('shake', shouldShake);
+        circle.classList.toggle('white', circle.classList.contains('white') && !shouldShake);
     });
 }
 
