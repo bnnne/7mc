@@ -202,29 +202,29 @@ h1 {
 /* Buttons */
 #buttons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 20px;
     justify-content: center;
 }
 
 button {
-    padding: 10px 20px;
-    cursor: pointer;
-    color: white;
-    border: none;
-    /* Rectangular shape */
-    border-radius: 0;
+    /* Fixed size matching your image ratio */
+    width: 180px;  /* Scaled down from 955px */
+    height: 48px;  /* Scaled down from 255px (maintains original aspect ratio) */
+    
     /* Image handling */
-    background: url('button.png') center center repeat;
-    background-size: auto; /* Maintain original texture size */
+    background: url('button.png') center/contain no-repeat;
     image-rendering: pixelated;
-    /* Fixed size */
-    width: 120px; /* Adjust based on your image size */
-    height: 40px; /* Adjust based on your image size */
+    border: none;
+    border-radius: 0;
+    
     /* Text styling */
+    color: white;
     font-family: 'Minecraft', Arial, sans-serif;
     font-size: 1.1em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: background-image 0.2s ease;
 }
 
 button:hover {
