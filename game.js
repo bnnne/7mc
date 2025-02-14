@@ -178,7 +178,16 @@ function revealAnswers() {
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach((circle, index) => {
-        circle.classList.toggle('white', index >= remainingTries);
+        if (index >= remainingTries) {
+            // Add blinking effect before transitioning to the container
+            circle.classList.add('blink'); // Add blink class
+            setTimeout(() => {
+                circle.classList.remove('blink'); // Remove blink class
+                circle.classList.add('white'); // Transition to container
+            }, 200); // Adjust the duration of the blink effect
+        } else {
+            circle.classList.remove('white'); // Ensure the heart is full
+        }
     });
 }
 
