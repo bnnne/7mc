@@ -21,9 +21,8 @@ body {
     margin: 0;
     padding: 20px;
     min-height: 100vh;
-    background: 
-        linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), /* White overlay */
-        url('bastion.png') center/cover fixed; /* Background image */
+    background: url('bastion.png') no-repeat center center fixed;
+    background-size: cover;
 }
 
 h1 {
@@ -44,7 +43,6 @@ h1 {
     gap: 10px;
     margin-bottom: 20px;
     width: 800px;
-    padding: 20px;
 }
 
 /* Add this to ensure consistent box sizing */
@@ -88,7 +86,6 @@ h1 {
     display: grid; /* Use grid for consistent spacing */
     grid-template-columns: 1fr; /* Single column */
     gap: 10px; /* Match the 10px gap of the word grid */
-    padding: 20px;
 }
 
 /* Category Boxes */
