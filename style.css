@@ -81,14 +81,28 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(138, 45, 56, 0);
+    background: rgba(122, 38, 48, 0); /* Start transparent */
     transition: background 0.2s ease;
     z-index: 1;
     pointer-events: none;
 }
 
 .word-box:hover::before {
-    background: rgba(138, 45, 56, 0.3);
+    background: rgba(122, 38, 48, 0.3); /* Hover state */
+}
+
+.word-box.selected::before,
+.word-box.selected:hover::before {
+    background: rgba(122, 38, 48, 0.3); /* Selected state */
+}
+
+.word-box.selected {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.word-box.selected:hover {
+    transform: scale(1.05);
 }
 
 .word-box > * {
