@@ -177,12 +177,14 @@ function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
 
     circles.forEach((circle, index) => {
-        // Update heart states
         const isLost = index >= remainingTries;
         circle.classList.toggle('white', isLost);
         
-        // Apply shake to all remaining hearts when only 1 try left
+        // Apply shake to ALL remaining hearts when 1 try left
         circle.classList.toggle('shake', remainingTries === 1 && !isLost);
+        
+        // Reset animation delays in case hearts get recreated
+        circle.style.setProperty('--delay', `${index * 0.1}s`);
     });
 }
 
