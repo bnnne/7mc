@@ -196,6 +196,39 @@ h1 {
     transition: background-image 0.2s ease;
 }
 
+@keyframes shake {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-5px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    75% {
+        transform: translateY(-5px);
+    }
+}
+
+.circle.shake {
+    animation: shake 0.5s infinite; /* Apply the shaking animation */
+}
+
+/* Add a delay to each heart's animation to make them alternate */
+.circle.shake:nth-child(1) {
+    animation-delay: 0s;
+}
+.circle.shake:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.circle.shake:nth-child(3) {
+    animation-delay: 0.2s;
+}
+.circle.shake:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
 #buttons {
     display: flex;
     gap: 10px;
