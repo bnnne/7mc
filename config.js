@@ -20,7 +20,7 @@ const categories = {
         solved: false
     },
     yellow: {
-        name: "can be added to water bottle",
+        name: "emits particles",
         words: ["glow squid", "enderman", "blaze", "phantom"],
         color: "yellow",
         solved: false
