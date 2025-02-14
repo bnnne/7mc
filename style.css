@@ -21,15 +21,15 @@ body {
     padding: 20px;
     background: url('bastion.png') no-repeat center center fixed;
     background-size: cover;
-    overflow: hidden; /* Prevent page extension */
-    height: 100vh; /* Use viewport height instead of min-height */
+    overflow: hidden;
+    height: 100vh;
 }
 
 h1 {
     font-family: 'Minecraft', Arial, sans-serif;
-    color: white; /* Was #333 */
+    color: white;
     margin-bottom: 30px;
-    font-weight: bold; /* This will now use the MinecraftBold font */
+    font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -44,13 +44,12 @@ h1 {
     gap: 10px;
     margin-bottom: 20px;
     width: 800px;
-    justify-items: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-items: center;
+    align-items: center;
 }
 
-/* Add this to ensure consistent box sizing */
 .word-box, .category-box {
-    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    box-sizing: border-box;
 }
 
 .word-box {
@@ -71,8 +70,7 @@ h1 {
     min-width: 0;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    transition: all 0.2s ease;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     position: relative;
     overflow: hidden;
 }
@@ -84,23 +82,23 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(122, 38, 48, 0); /* Start transparent */
+    background: rgba(122, 38, 48, 0);
     transition: background 0.2s ease;
     z-index: 1;
     pointer-events: none;
 }
 
 .word-box:hover::before {
-    background: rgba(122, 38, 48, 0.3); /* Hover state */
+    background: rgba(122, 38, 48, 0.3);
 }
 
 .word-box.selected {
-    border-color: #b026ff; /* Neon purple */
+    border-color: #b026ff;
     box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
 .word-box.selected::before {
-    background: transparent; /* Remove overlay for selected boxes */
+    background: transparent;
 }
 
 .word-box > * {
@@ -108,18 +106,18 @@ h1 {
     z-index: 2;
 }
 
-/* Update the categories container to use grid layout */
+/* Categories Container */
 #categoriesContainer {
     width: 800px;
     margin-bottom: 20px;
-    display: grid; /* Use grid for consistent spacing */
-    grid-template-columns: 1fr; /* Single column */
-    gap: 10px; /* Match the 10px gap of the word grid */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 /* Category Boxes */
 .category-box {
-    color: white; /* Changed from black to white */
+    color: white;
     padding: 15px;
     border-radius: 5px;
     text-align: center;
@@ -128,50 +126,39 @@ h1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 110px; /* Exact same height as word boxes */
-    min-width: 0; /* Prevent overflow */
-    box-sizing: border-box; /* Include padding in height */
-    margin: 0; /* Remove default margins (now handled by grid gap) */
-    background-repeat: repeat; /* Changed from default */
-    background-size: auto; /* Maintain original image size */
-    background-position: left top; /* Start tiling from top-left */
-    position: relative; /* For potential overlay */
-    background-repeat: repeat-x; /* Repeat horizontally */
-    background-size: auto 100%; /* Full height, auto width */
+    height: 110px;
+    min-width: 0;
+    box-sizing: border-box;
+    margin: 0;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
     background-position: left top;
+    position: relative;
 }
 
 .category-box div:first-child {
     font-weight: bold;
     margin-bottom: 10px;
-    /* Optional: add text shadow for better contrast */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Ensure category boxes match word box spacing */
-.category-box + .category-box {
-    margin-top: 8px; /* Match the gap between word boxes */
 }
 
 /* Tries Container */
 #triesContainer {
     display: flex;
-    align-items: center; /* Vertically center the text and circles */
+    align-items: center;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-/* Tries Text */
 #triesContainer p {
-    margin: 0; /* Remove default margin */
-    line-height: 1; /* Set line height to match the circles */
+    margin: 0;
+    line-height: 1;
     display: flex;
-    align-items: center; /* Vertically center the text */
-    color: white; /* Add this line */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Optional for better contrast */
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-/* Tries Circles */
 #triesCircles {
     display: flex;
     gap: 5px;
@@ -197,38 +184,22 @@ h1 {
 }
 
 @keyframes shake {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    25% {
-        transform: translateY(-5px);
-    }
-    50% {
-        transform: translateY(5px);
-    }
-    75% {
-        transform: translateY(-5px);
-    }
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
+    75% { transform: translateY(-5px); }
 }
 
 .circle.shake {
-    animation: shake 0.5s infinite; /* Apply the shaking animation */
+    animation: shake 0.5s infinite;
 }
 
-/* Add a delay to each heart's animation to make them alternate */
-.circle.shake:nth-child(1) {
-    animation-delay: 0s;
-}
-.circle.shake:nth-child(2) {
-    animation-delay: 0.1s;
-}
-.circle.shake:nth-child(3) {
-    animation-delay: 0.2s;
-}
-.circle.shake:nth-child(4) {
-    animation-delay: 0.3s;
-}
+.circle.shake:nth-child(1) { animation-delay: 0s; }
+.circle.shake:nth-child(2) { animation-delay: 0.1s; }
+.circle.shake:nth-child(3) { animation-delay: 0.2s; }
+.circle.shake:nth-child(4) { animation-delay: 0.3s; }
 
+/* Buttons */
 #buttons {
     display: flex;
     gap: 10px;
@@ -239,45 +210,30 @@ button {
     padding: 10px 20px;
     cursor: pointer;
     background-color: #302C36;
-    color: white; /* White text */
-    border: 2px solid black; /* Add a black border */
-    border: none;
+    color: white;
+    border: 2px solid black;
     border-radius: 5px;
     transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-    background-color: #5E1B28; /* Maroonish-red color */
+    background-color: #5E1B28;
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    border-color: black; /* Ensure the border stays black on hover */
 }
 
 button:active {
     transform: scale(0.98);
 }
 
+/* Message */
 #message {
     text-align: center;
     font-size: 1.2em;
     margin-top: 20px;
-    color: white; /* Set text color to white */
+    color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-#message .category-box {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    color: white; /* Ensure text inside category boxes is white */
-}
-
-#message .category-box div:first-child {
-    font-weight: bold; /* Bold the category name */
-    margin-bottom: 8px; /* Add spacing between the name and the words */
-    color: white; /* Ensure category name text is white */
 }
 
 .category-box::after {
@@ -287,16 +243,15 @@ button:active {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.2); /* Dark overlay */
+    background: rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
-/* Move text to foreground */
 .category-box div {
     position: relative;
     z-index: 2;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .category-box.purple { background-image: url('purple-cc.png'); }
