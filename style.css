@@ -263,6 +263,21 @@ button:active {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
 }
 
+/* Overlay Image Styles */
+.fire-overlay {
+    position: fixed; /* Fixed position to cover the entire viewport */
+    bottom: 0; /* Place at the bottom */
+    left: 0;
+    width: 100%; /* Full width */
+    height: auto; /* Adjust height automatically */
+    background-image: url('fire.png');
+    background-size: cover; /* Ensure the image covers the width */
+    background-position: bottom; /* Align to the bottom */
+    z-index: 1000; /* Ensure it's on top of everything */
+    display: none; /* Hidden by default */
+    pointer-events: none; /* Prevent interaction with the overlay */
+}
+
 .category-box.purple { background-image: url('purple-cc.png'); }
 .category-box.blue { background-image: url('blue-cc.png'); }
 .category-box.green { background-image: url('green-cc.png'); }
