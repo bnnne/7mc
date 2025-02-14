@@ -22,21 +22,9 @@ function playNextSound() {
     currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
 }
 
-// Function to show the fire overlay
-function showFireOverlay() {
-    const overlay = document.getElementById('fireOverlay');
-    overlay.style.display = 'block'; // Show the overlay
-
-    // Hide the overlay after 1 second
-    setTimeout(() => {
-        overlay.style.display = 'none';
-    }, 1000); // Adjust the duration as needed
-}
-
 // Trigger on mistake
 function handleMistake() {
     playNextSound(); // Play the next sound effect
-    showFireOverlay(); // Show the fire overlay
 }
 
 // Function to play a sound by ID
@@ -147,7 +135,7 @@ function handleCorrectCategory(category) {
 function handleIncorrectSubmit() {
     remainingTries--;
     updateTriesDisplay();
-    handleMistake(); // Play mistake sound and show overlay
+    handleMistake(); // Play mistake sound
 
     if (remainingTries === 0) {
         gameActive = false;
