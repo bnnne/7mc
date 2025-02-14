@@ -7,6 +7,42 @@ let gameActive = true;
 let categoriesSolved = 0;
 // Initialize tries (assuming 4 hearts)
 
+// Array of sound files
+const soundFiles = [
+    document.getElementById('hurtSound1'),
+    document.getElementById('hurtSound2'),
+    document.getElementById('hurtSound3')
+];
+
+let currentSoundIndex = 0; // Track the current sound index
+
+// Function to play the next sound effect for mistakes
+function playNextSound() {
+    const sound = soundFiles[currentSoundIndex];
+    sound.currentTime = 0; // Reset the sound to the start
+    sound.play(); // Play the sound
+
+    // Update the index for the next sound
+    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+}
+
+// Function to show the fire overlay
+function showFireOverlay() {
+    const overlay = document.getElementById('fireOverlay');
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Hide the overlay after 1 second
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 1000); // Adjust the duration as needed
+}
+
+// Example: Trigger on mistake
+function handleMistake() {
+    playNextSound(); // Play the next sound effect
+    showFireOverlay(); // Show the fire overlay
+}
+
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
@@ -144,6 +180,11 @@ function handleIncorrectSubmit() {
         document.getElementById('message').textContent = "you were prob close lol..... or not";
         revealAnswers(); // Reveal answers in the grid
     }
+}
+
+// Example: When a mistake is made
+if (mistakeCondition) {
+    handleMistake();
 }
 
 function updateTriesDisplay() {
