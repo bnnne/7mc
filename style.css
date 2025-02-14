@@ -175,16 +175,15 @@ h1 {
     transition: background-image 0.2s ease;
 }
 
-@keyframes shake {
+@keyframes gentle-shake {
     0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-5px); }
-    50% { transform: translateY(5px); }
-    75% { transform: translateY(-5px); }
+    25% { transform: translateY(-2px); }
+    50% { transform: translateY(1px); }
+    75% { transform: translateY(-2px); }
 }
 
 .circle.shake {
-    animation: shake 0.5s infinite;
-    animation-delay: var(--delay);
+    animation: gentle-shake 0.4s infinite;
     transform-origin: center bottom;
 }
 
@@ -192,6 +191,12 @@ h1 {
     animation: shake 0.5s infinite;
     animation-delay: var(--delay);
 }
+
+/* Staggered timing */
+.circle.shake:nth-child(1) { animation-delay: 0s; }
+.circle.shake:nth-child(2) { animation-delay: 0.1s; }
+.circle.shake:nth-child(3) { animation-delay: 0.2s; }
+.circle.shake:nth-child(4) { animation-delay: 0.3s; }
 
 /* Buttons */
 #buttons {
