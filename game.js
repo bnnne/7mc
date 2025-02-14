@@ -1,11 +1,7 @@
 let selectedWords = [];
-
 let remainingTries = 4;
-
 let gameActive = true;
-
 let categoriesSolved = 0;
-// Initialize tries (assuming 4 hearts)
 
 // Array of sound files
 const soundFiles = [
@@ -37,27 +33,29 @@ function showFireOverlay() {
     }, 1000); // Adjust the duration as needed
 }
 
-// Example: Trigger on mistake
+// Trigger on mistake
 function handleMistake() {
     playNextSound(); // Play the next sound effect
     showFireOverlay(); // Show the fire overlay
 }
 
+// Function to play a sound by ID
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
         sound.currentTime = 0;
         sound.play().catch(error => console.error(`Error playing sound: ${error}`));
-    } 
-} 
+    }
+}
 
-// Initialize button click sounds (re-added!)
+// Initialize button click sounds
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
         playSound('clickSound'); // Play sound when clicking any button
     });
 });
 
+// Toggle word selection
 function toggleWord(word, element) {
     if (!gameActive) return;
 
@@ -75,14 +73,15 @@ function toggleWord(word, element) {
     }
 }
 
+// Initialize the game grid
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
-    
+
     // Flatten all words and shuffle
     const allWords = [].concat(...Object.values(categories).map(c => c.words));
     shuffleArray(allWords);
-    
+
     allWords.forEach(word => {
         const box = document.createElement('div');
         box.className = 'word-box';
@@ -97,10 +96,11 @@ function initializeGame() {
         });
         gameGrid.appendChild(box);
     });
-    
-    updateTriesDisplay();
+
+    updateTriesDisplay(); // Initialize tries display
 }
 
+// Submit selected words
 function submitGroup() {
     if (!gameActive || selectedWords.length !== 4) return;
 
@@ -116,11 +116,12 @@ function submitGroup() {
 
     selectedWords = [];
     deselectAll();
-    checkGameEnd();
+    checkGameEnd(); // Check if the game is over
 }
 
+// Handle correct category submission
 function handleCorrectCategory(category) {
-    category.solved = true; // This marks the category as solved
+    category.solved = true; // Mark the category as solved
     categoriesSolved++;
 
     // Move words to category display
@@ -131,7 +132,7 @@ function handleCorrectCategory(category) {
         <div>${category.words.join(', ')}</div>
     `;
     document.getElementById('categoriesContainer').appendChild(categoryBox);
-    playSound(`${category.color}-categ`); // Add this line
+    playSound(`${category.color}-categ`); // Play category sound
 
     // Remove words from grid
     const gameGrid = document.getElementById('gameGrid');
@@ -142,6 +143,20 @@ function handleCorrectCategory(category) {
     });
 }
 
+// Handle incorrect submission
+function handleIncorrectSubmit() {
+    remainingTries--;
+    updateTriesDisplay();
+    handleMistake(); // Play mistake sound and show overlay
+
+    if (remainingTries === 0) {
+        gameActive = false;
+        document.getElementById('message').textContent = "you were prob close lol..... or not";
+        revealAnswers(); // Reveal answers in the grid
+    }
+}
+
+// Reveal unsolved categories
 function revealAnswers() {
     const unsolvedCategories = Object.values(categories)
         .filter(category => !category.solved)
@@ -158,7 +173,7 @@ function revealAnswers() {
                 }
             });
 
-            // Add the category to the categoriesContainer (like a correct guess)
+            // Add the category to the categoriesContainer
             const categoryBox = document.createElement('div');
             categoryBox.className = `category-box ${category.color}`;
             categoryBox.innerHTML = `
@@ -171,33 +186,18 @@ function revealAnswers() {
     });
 }
 
-function handleIncorrectSubmit() {
-    remainingTries--;
-    updateTriesDisplay();
-    
-    if (remainingTries === 0) {
-        gameActive = false;
-        document.getElementById('message').textContent = "you were prob close lol..... or not";
-        revealAnswers(); // Reveal answers in the grid
-    }
-}
-
-// Example: When a mistake is made
-if (mistakeCondition) {
-    handleMistake();
-}
-
+// Update tries display
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach((circle, index) => {
-        // Corrected logic: remove hearts from right to left
         circle.classList.toggle('white', index >= remainingTries);
     });
 }
 
+// Shuffle words in the grid
 function shuffleWords() {
     if (!gameActive) return;
-    
+
     const gameGrid = document.getElementById('gameGrid');
     const boxes = Array.from(gameGrid.children);
     shuffleArray(boxes);
@@ -205,6 +205,7 @@ function shuffleWords() {
     boxes.forEach(box => gameGrid.appendChild(box));
 }
 
+// Deselect all words
 function deselectAll() {
     selectedWords = [];
     document.querySelectorAll('.word-box').forEach(box => {
@@ -212,6 +213,7 @@ function deselectAll() {
     });
 }
 
+// Check if the game is over
 function checkGameEnd() {
     if (categoriesSolved === 4) {
         gameActive = false;
@@ -219,6 +221,7 @@ function checkGameEnd() {
     }
 }
 
+// Shuffle an array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
