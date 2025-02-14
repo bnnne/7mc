@@ -10,6 +10,11 @@ const soundFiles = [
     document.getElementById('hurtSound3')
 ];
 
+// Set animation delays on hearts initially
+document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
+    circle.style.setProperty('--delay', `${index * 0.1}s`);
+});
+
 let currentSoundIndex = 0;
 
 // Function to play the next sound effect for mistakes
