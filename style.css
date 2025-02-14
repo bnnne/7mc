@@ -207,29 +207,31 @@ h1 {
     justify-content: center;
 }
 
+/* Buttons */
 button {
-    /* Set your desired button size */
-    width: 200px;  /* Adjust this value as needed */
-    height: calc(200px * (255 / 955)); /* Maintain 955:255 aspect ratio */
+    /* Set dimensions matching your image aspect ratio */
+    width: 180px;  /* Adjust based on needed size */
+    height: 48px;  /* 180 * (255/955) ≈ 48 */
     
     /* Image handling */
-    background: url('button.png') center/contain no-repeat;
-    image-rendering: pixelated;
+    background: url('button.png') center/cover no-repeat;
+    image-rendering: crisp-edges; /* Better for scaled pixel art */
     border: none;
-    border-radius: 0;
+    
+    /* Box model fix */
+    box-sizing: border-box;
+    padding: 5px 15px;
     
     /* Text styling */
     color: white;
     font-family: 'Minecraft', Arial, sans-serif;
-    font-size: 1.1em;
-    padding: 10px 20px;
+    font-size: 0.9em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
 button:hover {
     background-image: url('button-hover.png');
-    box-shadow: none;
-    transform: none; /* Explicitly disable scaling */
 }
 
 button:active {
