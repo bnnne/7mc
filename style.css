@@ -77,21 +77,10 @@ h1 {
     overflow: hidden;
 }
 
-.word-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(122, 38, 48, 0);
-    transition: background 0.2s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.word-box:hover::before {
-    background: rgba(122, 38, 48, 0.3);
+.word-box:hover {
+    border-color: #b026ff; /* Neon purple */
+    box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+    transform: scale(1.02); /* Optional: Keep slight scale effect */
 }
 
 .word-box.selected {
