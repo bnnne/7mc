@@ -44,6 +44,8 @@ h1 {
     gap: 10px;
     margin-bottom: 20px;
     width: 800px;
+    justify-items: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
 /* Add this to ensure consistent box sizing */
