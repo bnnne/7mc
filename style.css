@@ -179,16 +179,21 @@ h1 {
 }
 
 .circle {
-    width: 28px;  /* Increased size for better visibility */
+    width: 28px;
     height: 28px;
     background-image: url('heart-full.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center; /* Ensure centering */
+    background-position: center;
 }
 
 .circle.white {
     background-image: url('heart-container.png');
+}
+
+.circle.blink {
+    background-image: url('heart-blink.png');
+    transition: background-image 0.2s ease;
 }
 
 #buttons {
