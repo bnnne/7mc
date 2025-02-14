@@ -2,26 +2,26 @@ const categoryPriority = ['purple', 'blue', 'green', 'yellow'];
 
 const categories = {
     purple: {
-        name: "items given in a cleric trade table",
-        words: ["glowstone", "lapis lazuli", "ender pearl", "bottle o' enchanting"],
+        name: "variants dependent on biome temperature",
+        words: ["skeleton", "fox", "frog", "zombie"],
         color: "purple",
         solved: false
     },
     blue: {
-        name: "animated blocks",
-        words: ["sea lantern", "sculk", "stone cutter", "redstone ore"],
+        name: "attacked by axolotls",
+        words: ["tropical fish", "squid", "drowned", "guardians"],
         color: "blue",
         solved: false
     },
     green: {
-        name: "things that give status effects, not from a potion",
-        words: ["beacon", "shulker", "witch", "command block"],
+        name: "immune to fire/lava",
+        words: ["strider", "ghast", "warden", "ender dragon"],
         color: "green",
         solved: false
     },
     yellow: {
         name: "can be added to water bottle",
-        words: ["netherwart", "gunpowder", "glowstone dust", "redstone dust"],
+        words: ["glow squid", "enderman", "blaze", "phantom"],
         color: "yellow",
         solved: false
     }
