@@ -52,32 +52,47 @@ h1 {
 }
 
 .word-box {
-    background-color: white;
-    border: 2px solid #ccc;
+    background: 
+        url('blackstone.png') center/cover, /* Background image */
+        rgba(255, 255, 255, 0.1); /* Fallback color */
+    border: 2px solid rgba(255, 255, 255, 0.3);
     padding: 15px;
     text-align: center;
     cursor: pointer;
     border-radius: 5px;
     user-select: none;
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Vertically center text */
-    justify-content: center; /* Horizontally center text */
-    height: 100px; /* Fixed height for all word boxes */
-    min-width: 0; /* Prevents boxes from expanding due to long text */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.word-box:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
-}
-
-.word-box.selected {
-    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Set equal width and height */
+    height: 100px; /* Maintain square shape */
+    min-width: 0;
     color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    transition: all 0.2s ease;
+    position: relative; /* Needed for overlay */
+    overflow: hidden; /* Keep overlay contained */
 }
 
-.word-box.selected:hover {
-    background-color: #444; /* Slightly darker on hover for selected boxes */
+.word-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 100, 100, 0); /* Start fully transparent */
+    transition: background 0.2s ease;
+    z-index: 1;
+}
+
+.word-box:hover::before {
+    background: rgba(138, 45, 56, 0.3); /* Light reddish overlay */
+}
+
+.word-box > * {
+    position: relative;
+    z-index: 2; /* Keep text above overlay */
 }
 
 /* Update the categories container to use grid layout */
