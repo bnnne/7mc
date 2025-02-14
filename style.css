@@ -12,19 +12,17 @@
     font-style: normal;
 }
 
-/* Ensure the body is centered and takes full width */
 body {
     font-family: 'Minecraft', Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center children horizontally */
-    justify-content: center; /* Center children vertically */
+    align-items: center;
     margin: 0;
     padding: 20px;
     background: url('bastion.png') no-repeat center center fixed;
     background-size: cover;
-    overflow: hidden;
-    height: 100vh;
+    overflow: hidden; /* Prevent page extension */
+    height: 100vh; /* Use viewport height instead of min-height */
 }
 
 h1 {
@@ -39,14 +37,13 @@ h1 {
     font-family: 'Minecraft', Arial, sans-serif;
 }
 
-/* Game Grid Container */
+/* Word Boxes */
 #gameGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-    gap: 10px; /* Adjust gap as needed */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     margin-bottom: 20px;
-    width: 800px; /* Fixed width */
-    margin: 0 auto; /* Center the grid horizontally */
+    width: 800px;
 }
 
 /* Add this to ensure consistent box sizing */
@@ -54,7 +51,6 @@ h1 {
     box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
 }
 
-/* Word Boxes */
 .word-box {
     background: 
         url('blackstone.png') center/cover,
@@ -68,11 +64,13 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px; /* Fixed width for each box */
-    height: 100px; /* Fixed height for each box */
+    width: 100px;
+    height: 100px;
+    min-width: 0;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     transition: all 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease;
     position: relative;
     overflow: hidden;
 }
