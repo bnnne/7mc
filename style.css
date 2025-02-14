@@ -212,17 +212,24 @@ button {
     cursor: pointer;
     color: white;
     border: none;
-    border-radius: 5px;
-    transition: all 0.2s ease;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    background: url('button.png') center/cover no-repeat;
-    background-size: 100% 100%;
+    /* Rectangular shape */
+    border-radius: 0;
+    /* Image handling */
+    background: url('button.png') center center repeat;
+    background-size: auto; /* Maintain original texture size */
     image-rendering: pixelated;
+    /* Fixed size */
+    width: 120px; /* Adjust based on your image size */
+    height: 40px; /* Adjust based on your image size */
+    /* Text styling */
+    font-family: 'Minecraft', Arial, sans-serif;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
     background-image: url('button-hover.png');
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
     transform: none; /* Explicitly disable scaling */
 }
 
