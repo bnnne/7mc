@@ -12,43 +12,6 @@
     font-style: normal;
 }
 
-/* Start Screen */
-#startScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('nether_portal.png') repeat;
-    background-size: 64px 64px; /* Adjust based on the size of nether_portal.png */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-#startScreen h1 {
-    font-family: 'Minecraft', Arial, sans-serif;
-    color: white;
-    font-size: 3em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Background Animation */
-@keyframes scrollBackground {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 64px 64px; /* Adjust based on the size of nether_portal.png */
-    }
-}
-
-#startScreen {
-    animation: scrollBackground 2s linear infinite;
-}
-
 body {
     font-family: 'Minecraft', Arial, sans-serif;
     display: flex;
