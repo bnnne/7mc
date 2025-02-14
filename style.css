@@ -223,6 +223,7 @@ button {
 button:hover {
     background-image: url('button-hover.png');
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transform: none; /* Explicitly disable scaling */
 }
 
 button:active {
