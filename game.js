@@ -237,6 +237,33 @@ function shuffleArray(array) {
     }
 }
 
+// Example initializeGame function (ensure this is defined in your game.js)
+function initializeGame() {
+    const gameGrid = document.getElementById('gameGrid');
+    gameGrid.innerHTML = '';
+
+    // Flatten all words and shuffle
+    const allWords = [].concat(...Object.values(categories).map(c => c.words));
+    shuffleArray(allWords);
+
+    allWords.forEach(word => {
+        const box = document.createElement('div');
+        box.className = 'word-box';
+        box.textContent = word;
+        box.setAttribute('role', 'button');
+        box.setAttribute('tabindex', '0');
+        box.onclick = () => toggleWord(word, box);
+        box.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                toggleWord(word, box);
+            }
+        });
+        gameGrid.appendChild(box);
+    });
+
+    updateTriesDisplay(); // Initialize tries display
+}
+
 // Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function () {
     const startScreen = document.getElementById('startScreen');
