@@ -91,18 +91,17 @@ h1 {
     background: rgba(122, 38, 48, 0.3); /* Hover state */
 }
 
-.word-box.selected::before,
-.word-box.selected:hover::before {
-    background: rgba(122, 38, 48, 0.3); /* Selected state */
-}
-
 .word-box.selected {
-    border-color: #00ff00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    border-color: #b026ff; /* Neon purple */
+    box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
 .word-box.selected:hover {
     transform: scale(1.05);
+}
+
+.word-box.selected::before {
+    background: transparent; /* Remove overlay for selected boxes */
 }
 
 .word-box > * {
