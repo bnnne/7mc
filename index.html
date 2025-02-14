@@ -7,38 +7,46 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Connections (Minecraft Edition)</h1>
-    <div id="categoriesContainer"></div>
-    <div id="gameGrid"></div>
-    <div id="triesContainer">
-        <p>Tries remaining</p>
-        <div id="triesCircles">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
+    <!-- Start Screen -->
+    <div id="startScreen">
+        <h1>Click to Start</h1>
+    </div>
+
+    <!-- Game Content (Hidden Initially) -->
+    <div id="gameContent" style="display: none;">
+        <h1>Connections (Minecraft Edition)</h1>
+        <div id="categoriesContainer"></div>
+        <div id="gameGrid"></div>
+        <div id="triesContainer">
+            <p>Tries remaining</p>
+            <div id="triesCircles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
         </div>
-    </div>
-    <div id="buttons">
-        <button onclick="shuffleWords()">Shuffle</button>
-        <button onclick="deselectAll()">Deselect all</button>
-        <button onclick="submitGroup()">Submit</button>
-    </div>
-    <div id="message"></div>
-    
-    <audio id="clickSound" src="button-click.mp3"></audio>
-    <audio id="selectSound" src="button-click.mp3"></audio>
-    <audio id="deselectSound" src="button-click.mp3"></audio>
+        <div id="buttons">
+            <button onclick="shuffleWords()">Shuffle</button>
+            <button onclick="deselectAll()">Deselect all</button>
+            <button onclick="submitGroup()">Submit</button>
+        </div>
+        <div id="message"></div>
+        
+        <audio id="clickSound" src="button-click.mp3"></audio>
+        <audio id="selectSound" src="button-click.mp3"></audio>
+        <audio id="deselectSound" src="button-click.mp3"></audio>
 
-    <audio id="purple-categ" src="purple-categ.mp3"></audio>
-    <audio id="blue-categ" src="blue-categ.mp3"></audio>
-    <audio id="green-categ" src="green-categ.mp3"></audio>
-    <audio id="yellow-categ" src="yellow-categ.mp3"></audio>
+        <audio id="purple-categ" src="purple-categ.mp3"></audio>
+        <audio id="blue-categ" src="blue-categ.mp3"></audio>
+        <audio id="green-categ" src="green-categ.mp3"></audio>
+        <audio id="yellow-categ" src="yellow-categ.mp3"></audio>
 
-    <audio id="hurtSound1" src="hurt-fire1.mp3"></audio>
-    <audio id="hurtSound2" src="hurt-fire2.mp3"></audio>
-    <audio id="hurtSound3" src="hurt-fire3.mp3"></audio>
-    
+        <audio id="hurtSound1" src="hurt-fire1.mp3"></audio>
+        <audio id="hurtSound2" src="hurt-fire2.mp3"></audio>
+        <audio id="hurtSound3" src="hurt-fire3.mp3"></audio>
+    </div>
+
     <script src="config.js"></script>
     <script src="game.js"></script>
 </body>
