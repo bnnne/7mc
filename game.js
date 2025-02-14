@@ -237,5 +237,18 @@ function shuffleArray(array) {
     }
 }
 
+// Wait for the DOM to load
+document.addEventListener('DOMContentLoaded', function () {
+    const startScreen = document.getElementById('startScreen');
+    const gameContent = document.getElementById('gameContent');
+
+    // When the start screen is clicked, hide it and show the game
+    startScreen.addEventListener('click', function () {
+        startScreen.style.display = 'none'; // Hide the start screen
+        gameContent.style.display = 'block'; // Show the game content
+        initializeGame(); // Initialize the game
+    });
+});
+
 // Initialize game on load
 window.onload = initializeGame;
