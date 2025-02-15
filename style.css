@@ -340,16 +340,16 @@ button:active {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px; /* Adjust width as needed */
-    height: 60px; /* Adjust height as needed */
-    background-color: #302C36; /* Grey background */
-    border: 2px solid #555; /* Slightly darker border */
+    width: 150px; /* Smaller width */
+    height: 40px; /* Smaller height */
+    background-color: #1F1D24; /* Grey background */
+    border: 2px solid black; /* Black border */
     border-radius: 5px; /* Rounded corners */
     color: white; /* White text */
     font-family: 'Minecraft', Arial, sans-serif;
-    font-size: 1.1em;
+    font-size: 0.9em; /* Smaller font size */
     text-align: center;
-    line-height: 60px; /* Center text vertically */
+    line-height: 40px; /* Center text vertically */
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease, visibility 1s ease;
