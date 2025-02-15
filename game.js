@@ -35,6 +35,9 @@ function stopTimer() {
     clearInterval(timerInterval);
 }
 
+// Play portal-swoosh.mp3 on the start screen
+document.getElementById('portal-swoosh').play();
+
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
     // Hide the start screen
@@ -61,7 +64,7 @@ document.getElementById('startScreen').addEventListener('click', function() {
             portalExitSound.play();
 
             // Play fire.mp3 on loop
-            fireSound.loop = true; // Ensure looping is enabled
+            fireSound.loop = true; // Set loop to true
             fireSound.play().catch(error => {
                 console.error('Error playing fire.mp3:', error);
             });
@@ -82,6 +85,12 @@ const soundFiles = [
     document.getElementById('hurtSound2'),
     document.getElementById('hurtSound3')
 ];
+
+document.getElementById('startScreen').addEventListener('click', function() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('gameContent').classList.remove('hidden');
+    initializeGame();
+});
 
 // Set animation delays on hearts initially
 document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
@@ -133,13 +142,8 @@ function toggleWord(word, element) {
     }
 }
 
-// Initialize the game grid
+// Initialize the game grid (only one initializeGame function)
 function initializeGame() {
-    if (!categories || Object.keys(categories).length === 0) {
-        console.error('Categories are not defined or empty.');
-        return;
-    }
-
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
 
@@ -214,8 +218,8 @@ function showOneWayBox() {
         setTimeout(() => {
             oneWayBox.classList.add('hidden');
             oneWayBox.classList.remove('fade-out');
-        }, 500); // Fade-out duration
-    }, 1000); // Display duration (1 second)
+        }, 1000); // Fade-out duration
+    }, 2000); // Display duration (2 seconds)
 }
 
 function handleCorrectCategory(category) {
@@ -320,6 +324,11 @@ function checkGameEnd() {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
         stopTimer(); // Stop the timer when the game ends
+
+        // Stop fire.mp3
+        const fireSound = document.getElementById('fireSound');
+        fireSound.pause();
+        fireSound.currentTime = 0;
     }
 }
 
