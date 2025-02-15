@@ -64,6 +64,8 @@ document.getElementById('startScreen').addEventListener('click', function() {
         document.getElementById('gameContent').classList.remove('hidden');
         initializeGame();
         startTimer(); // Start the timer when the game starts
+        
+        document.getElementById('timer').style.display = 'block';
     }, 4000); // 4 seconds
 });
 
