@@ -327,11 +327,6 @@ function checkGameEnd() {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
         stopTimer(); // Stop the timer when the game ends
-
-        // Stop fire.mp3
-        const fireSound = document.getElementById('fireSound');
-        fireSound.pause();
-        fireSound.currentTime = 0;
     }
 }
 
