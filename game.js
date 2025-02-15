@@ -1,3 +1,6 @@
+// Debugging: Log when the script loads
+console.log("game.js loaded!");
+
 let selectedWords = [];
 let remainingTries = 4;
 let gameActive = true;
@@ -20,10 +23,8 @@ function updateTimer() {
 
     let formattedTime;
     if (hours > 0) {
-        // Format as HH:MM:SS if over an hour
         formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     } else {
-        // Format as MM:SS if under an hour
         formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
@@ -37,6 +38,8 @@ function stopTimer() {
 
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
+    console.log("Start screen clicked!"); // Debugging line
+
     // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
 
@@ -45,7 +48,9 @@ document.getElementById('startScreen').addEventListener('click', function() {
 
     // Play portal-enter.mp3
     const portalEnterAudio = document.getElementById('portal-enter');
-    portalEnterAudio.play();
+    portalEnterAudio.play().catch(error => {
+        console.error('Error playing portal-enter.mp3:', error); // Debugging line
+    });
 
     // Wait for 4 seconds (duration of the loading screen and audio)
     setTimeout(() => {
@@ -58,20 +63,21 @@ document.getElementById('startScreen').addEventListener('click', function() {
             const fireSound = document.getElementById('fireSound');
 
             // Play portal-exit.mp3
-            portalExitSound.play();
+            portalExitSound.play().catch(error => {
+                console.error('Error playing portal-exit.mp3:', error); // Debugging line
+            });
 
             // Play fire.mp3 on loop
-            fireSound.loop = true; // Set loop to true
+            fireSound.loop = true;
             fireSound.play().catch(error => {
-                console.error('Error playing fire.mp3:', error);
+                console.error('Error playing fire.mp3:', error); // Debugging line
             });
         }, 200);
 
         // Show the game content and start the game
         document.getElementById('gameContent').classList.remove('hidden');
         initializeGame();
-        startTimer(); // Start the timer when the game starts
-        
+        startTimer();
         document.getElementById('timer').style.display = 'block';
     }, 4000); // 4 seconds
 });
