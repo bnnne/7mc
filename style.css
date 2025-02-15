@@ -340,7 +340,7 @@ button:active {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px; /* Smaller width */
+    width: 110px; /* Smaller width */
     height: 25px; /* Smaller height */
     background-color: #1F1D24; /* Grey background */
     border: 2px solid black; /* Black border */
@@ -348,8 +348,10 @@ button:active {
     color: white; /* White text */
     font-family: 'Minecraft', Arial, sans-serif;
     font-size: 0.9em; /* Smaller font size */
-    align-items: center;
-    justify-content: center;
+    text-align: center; /* Center text horizontally */
+    display: flex; /* Use flexbox for vertical centering */
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease, visibility 1s ease;
