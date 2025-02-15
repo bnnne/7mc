@@ -35,12 +35,36 @@ function stopTimer() {
     clearInterval(timerInterval);
 }
 
+// Play portal-swoosh.mp3 on the start screen
+document.getElementById('portal-swoosh').play();
+
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
+    // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
-    document.getElementById('gameContent').classList.remove('hidden');
-    initializeGame();
-    startTimer(); // Start the timer when the game starts
+
+    // Show the loading screen
+    document.getElementById('loadingScreen').classList.remove('hidden');
+
+    // Play portal-enter.mp3
+    const portalEnterAudio = document.getElementById('portal-enter');
+    portalEnterAudio.play();
+
+    // Wait for 4 seconds (duration of the loading screen and audio)
+    setTimeout(() => {
+        // Hide the loading screen
+        document.getElementById('loadingScreen').classList.add('hidden');
+
+        // Play portal-exit.mp3 after 0.2 seconds
+        setTimeout(() => {
+            document.getElementById('portal-exit').play();
+        }, 200);
+
+        // Show the game content and start the game
+        document.getElementById('gameContent').classList.remove('hidden');
+        initializeGame();
+        startTimer(); // Start the timer when the game starts
+    }, 4000); // 4 seconds
 });
 
 // Array of sound files
