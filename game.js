@@ -37,7 +37,7 @@ function stopTimer() {
 
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
-    // Play portal-swoosh.mp3
+    // Play portal-swoosh.mp3 (non-looping)
     const portalSwoosh = document.getElementById('portal-swoosh');
     portalSwoosh.play().catch(error => {
         console.error('Error playing portal-swoosh.mp3:', error);
@@ -67,7 +67,7 @@ document.getElementById('startScreen').addEventListener('click', function() {
             portalExitSound.play();
 
             // Play fire.mp3 on loop
-            fireSound.loop = true; // Set loop to true
+            fireSound.loop = true; // Ensure looping is enabled
             fireSound.play().catch(error => {
                 console.error('Error playing fire.mp3:', error);
             });
@@ -326,11 +326,6 @@ function checkGameEnd() {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
         stopTimer(); // Stop the timer when the game ends
-
-        // Stop fire.mp3
-        const fireSound = document.getElementById('fireSound');
-        fireSound.pause();
-        fireSound.currentTime = 0;
     }
 }
 
