@@ -35,9 +35,6 @@ function stopTimer() {
     clearInterval(timerInterval);
 }
 
-// Play portal-swoosh.mp3 on the start screen
-document.getElementById('portal-swoosh').play();
-
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
     // Hide the start screen
@@ -85,12 +82,6 @@ const soundFiles = [
     document.getElementById('hurtSound2'),
     document.getElementById('hurtSound3')
 ];
-
-document.getElementById('startScreen').addEventListener('click', function() {
-    document.getElementById('startScreen').style.display = 'none';
-    document.getElementById('gameContent').classList.remove('hidden');
-    initializeGame();
-});
 
 // Set animation delays on hearts initially
 document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
@@ -142,7 +133,7 @@ function toggleWord(word, element) {
     }
 }
 
-// Initialize the game grid (only one initializeGame function)
+// Initialize the game grid
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
@@ -338,8 +329,3 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
-
-// Starts game as soon as window loads
-window.onload = function() {
-    initializeGame();
-};
