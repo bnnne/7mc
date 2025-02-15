@@ -2,6 +2,46 @@ let selectedWords = [];
 let remainingTries = 4;
 let gameActive = true;
 let categoriesSolved = 0;
+let timerInterval;
+let startTime;
+
+// Function to start the timer
+function startTimer() {
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+// Function to update the timer display
+function updateTimer() {
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Time in seconds
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const seconds = elapsedTime % 60;
+
+    let formattedTime;
+    if (hours > 0) {
+        // Format as HH:MM:SS if over an hour
+        formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    } else {
+        // Format as MM:SS if under an hour
+        formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    document.getElementById('timer').textContent = formattedTime;
+}
+
+// Function to stop the timer
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+// Start the game when the start screen is clicked
+document.getElementById('startScreen').addEventListener('click', function() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('gameContent').classList.remove('hidden');
+    initializeGame();
+    startTimer(); // Start the timer when the game starts
+});
 
 // Array of sound files
 const soundFiles = [
@@ -211,6 +251,7 @@ function checkGameEnd() {
     if (categoriesSolved === 4) {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
+        stopTimer(); // Stop the timer when the game ends
     }
 }
 
