@@ -68,9 +68,9 @@ document.getElementById('startScreen').addEventListener('click', function() {
             });
 
             // Play fire.mp3 on loop
-            fireSound.loop = true;
+            fireSound.loop = true; // Enable looping
             fireSound.play().catch(error => {
-                console.error('Error playing fire.mp3:', error); // Debugging line
+                console.error('Error playing fire.mp3:', error);
             });
         }, 200);
 
@@ -79,7 +79,7 @@ document.getElementById('startScreen').addEventListener('click', function() {
         initializeGame();
         startTimer();
         document.getElementById('timer').style.display = 'block';
-    }, 4000); // 4 seconds
+    }, 4000);
 });
 
 // Array of sound files
