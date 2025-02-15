@@ -197,21 +197,23 @@ function showOneWayBox() {
     oneWayBox.classList.remove('hidden');
     oneWayBox.classList.add('fade-in');
 
-    // Play the sound effect
+    // Play the button-click.mp3 sound effect
     const clickSound = document.getElementById('clickSound');
     if (clickSound) {
         clickSound.currentTime = 0; // Reset the sound to the start
         clickSound.play().catch(error => {
-            console.error('Error playing sound:', error);
+            console.error('Error playing button-click.mp3:', error);
         });
     } else {
         console.error('Sound element not found');
     }
 
+    // Hide the box after 2 seconds
     setTimeout(() => {
         oneWayBox.classList.remove('fade-in');
         oneWayBox.classList.add('fade-out');
 
+        // Remove the box from the DOM after the fade-out animation
         setTimeout(() => {
             oneWayBox.classList.add('hidden');
             oneWayBox.classList.remove('fade-out');
