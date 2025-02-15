@@ -190,6 +190,11 @@ function showOneWayBox() {
     oneWayBox.classList.remove('hidden');
     oneWayBox.classList.add('fade-in');
 
+    // Play the sound effect
+    const clickSound = document.getElementById('clickSound');
+    clickSound.currentTime = 0; // Reset the sound to the start
+    clickSound.play();
+
     setTimeout(() => {
         oneWayBox.classList.remove('fade-in');
         oneWayBox.classList.add('fade-out');
