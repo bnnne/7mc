@@ -340,8 +340,8 @@ button:active {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 150px; /* Smaller width */
-    height: 40px; /* Smaller height */
+    width: 80px; /* Smaller width */
+    height: 20px; /* Smaller height */
     background-color: #1F1D24; /* Grey background */
     border: 2px solid black; /* Black border */
     border-radius: 5px; /* Rounded corners */
