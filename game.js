@@ -168,12 +168,37 @@ function submitGroup() {
     if (correctCategory) {
         handleCorrectCategory(correctCategory);
     } else {
-        handleIncorrectSubmit();
+        // Check if three out of four words are correct
+        const partialMatches = Object.values(categories).filter(cat =>
+            selectedWords.filter(word => cat.words.includes(word)).length === 3
+        );
+
+        if (partialMatches.length > 0) {
+            showOneWayBox();
+        } else {
+            handleIncorrectSubmit();
+        }
     }
 
     selectedWords = [];
     deselectAll();
     checkGameEnd();
+}
+
+function showOneWayBox() {
+    const oneWayBox = document.getElementById('oneWayBox');
+    oneWayBox.classList.remove('hidden');
+    oneWayBox.classList.add('fade-in');
+
+    setTimeout(() => {
+        oneWayBox.classList.remove('fade-in');
+        oneWayBox.classList.add('fade-out');
+
+        setTimeout(() => {
+            oneWayBox.classList.add('hidden');
+            oneWayBox.classList.remove('fade-out');
+        }, 1000); // Fade-out duration
+    }, 5000); // Display duration
 }
 
 function handleCorrectCategory(category) {
