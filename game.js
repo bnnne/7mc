@@ -220,8 +220,8 @@ function showOneWayBox() {
         setTimeout(() => {
             oneWayBox.classList.add('hidden');
             oneWayBox.classList.remove('fade-out');
-        }, 1000); // Fade-out duration
-    }, 2000); // Display duration (2 seconds)
+        }, 500); // Fade-out duration
+    }, 1000000); // Display duration (2 seconds)
 }
 
 function handleCorrectCategory(category) {
