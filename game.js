@@ -57,7 +57,17 @@ document.getElementById('startScreen').addEventListener('click', function() {
 
         // Play portal-exit.mp3 after 0.2 seconds
         setTimeout(() => {
-            document.getElementById('portal-exit').play();
+            const portalExitSound = document.getElementById('portal-exit');
+            const fireSound = document.getElementById('fireSound');
+
+            // Play portal-exit.mp3
+            portalExitSound.play();
+
+            // Play fire.mp3 on loop
+            fireSound.loop = true; // Set loop to true
+            fireSound.play().catch(error => {
+                console.error('Error playing fire.mp3:', error);
+            });
         }, 200);
 
         // Show the game content and start the game
@@ -314,6 +324,11 @@ function checkGameEnd() {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
         stopTimer(); // Stop the timer when the game ends
+
+        // Stop fire.mp3
+        const fireSound = document.getElementById('fireSound');
+        fireSound.pause();
+        fireSound.currentTime = 0;
     }
 }
 
