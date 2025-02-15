@@ -24,6 +24,29 @@
     cursor: pointer;
 }
 
+/* Loading Screen */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('portal-static.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1001; /* Above the start screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Hide loading screen initially */
+#loadingScreen.hidden {
+    display: none;
+}
+
 /* Hide game content initially */
 .hidden {
     display: none;
