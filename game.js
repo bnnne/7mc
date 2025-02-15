@@ -175,18 +175,22 @@ function submitGroup() {
     if (correctCategory) {
         handleCorrectCategory(correctCategory);
     } else {
-        // Check if three out of four words are correct
+        // Check if the player is one away (3 out of 4 words correct)
         const partialMatches = Object.values(categories).filter(cat =>
             selectedWords.filter(word => cat.words.includes(word)).length === 3
         );
 
         if (partialMatches.length > 0) {
+            // If the player is one away, show the One Way Box and deduct a try
             showOneWayBox();
+            handleIncorrectSubmit(); // Deduct a try
         } else {
+            // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
         }
     }
 
+    // Reset selected words and check if the game is over
     selectedWords = [];
     deselectAll();
     checkGameEnd();
