@@ -37,11 +37,6 @@ function stopTimer() {
 
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
-    // Play portal-swoosh.mp3 (non-looping)
-    const portalSwoosh = document.getElementById('portal-swoosh');
-    portalSwoosh.play().catch(error => {
-        console.error('Error playing portal-swoosh.mp3:', error);
-    });
 
     // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
