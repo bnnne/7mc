@@ -10,6 +10,12 @@ const soundFiles = [
     document.getElementById('hurtSound3')
 ];
 
+document.getElementById('startScreen').addEventListener('click', function() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('gameContent').classList.remove('hidden');
+    initializeGame();
+});
+
 // Set animation delays on hearts initially
 document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
     circle.style.setProperty('--delay', `${index * 0.1}s`);
