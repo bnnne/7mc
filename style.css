@@ -21,19 +21,8 @@
     height: 100%;
     background: url('portal.gif') no-repeat center center fixed;
     background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     z-index: 1000;
     cursor: pointer; /* Indicate that the screen is clickable */
-}
-
-#startScreen h1 {
-    color: white;
-    font-size: 3em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
 }
 
 /* Hide game content initially */
