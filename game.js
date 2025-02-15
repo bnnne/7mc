@@ -181,9 +181,9 @@ function submitGroup() {
         );
 
         if (partialMatches.length > 0) {
-            // If the player is one away, show the One Way Box and deduct a try
-            showOneWayBox();
+            // If the player is one away, deduct a try and show the One Way Box
             handleIncorrectSubmit(); // Deduct a try
+            showOneWayBox(); // Show the One Way Box
         } else {
             // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
@@ -249,11 +249,11 @@ function handleCorrectCategory(category) {
 function handleIncorrectSubmit() {
     const previousTries = remainingTries;
     remainingTries--;
-    
+
     // Add blink to all hearts first
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
-    
+
     // After blink duration, update display
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
