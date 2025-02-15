@@ -333,6 +333,40 @@ button:active {
     width: 100%;
 }
 
+/* One Way Box */
+#oneWayBox {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px; /* Same as button width */
+    height: 48px; /* Same as button height */
+    background: url('button.png') center/cover no-repeat;
+    image-rendering: crisp-edges;
+    border: none;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    color: white;
+    font-family: 'Minecraft', Arial, sans-serif;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    line-height: 48px; /* Center text vertically */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+#oneWayBox.fade-in {
+    opacity: 1;
+    visibility: visible;
+}
+
+#oneWayBox.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .category-box.purple { background-image: url('purple-cc.png'); }
 .category-box.blue { background-image: url('blue-cc.png'); }
 .category-box.green { background-image: url('green-cc.png'); }
