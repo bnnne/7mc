@@ -192,8 +192,14 @@ function showOneWayBox() {
 
     // Play the sound effect
     const clickSound = document.getElementById('clickSound');
-    clickSound.currentTime = 0; // Reset the sound to the start
-    clickSound.play();
+    if (clickSound) {
+        clickSound.currentTime = 0; // Reset the sound to the start
+        clickSound.play().catch(error => {
+            console.error('Error playing sound:', error);
+        });
+    } else {
+        console.error('Sound element not found');
+    }
 
     setTimeout(() => {
         oneWayBox.classList.remove('fade-in');
@@ -203,7 +209,7 @@ function showOneWayBox() {
             oneWayBox.classList.add('hidden');
             oneWayBox.classList.remove('fade-out');
         }, 1000); // Fade-out duration
-    }, 5000); // Display duration
+    }, 2000); // Display duration (2 seconds)
 }
 
 function handleCorrectCategory(category) {
