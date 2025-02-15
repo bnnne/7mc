@@ -68,7 +68,7 @@
 }
 
 /* Show the timer when the game content is displayed and the loading screen is hidden */
-#gameContent:not(.hidden) #loadingScreen.hidden + #timer {
+#gameContent:not(.hidden) ~ #timer {
     display: block;
 }
 
