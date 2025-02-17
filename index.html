@@ -62,11 +62,11 @@
         <!-- New Audio Elements -->
         <audio id="portal-enter" src="portal-enter.mp3"></audio>
         <audio id="portal-exit" src="portal-exit.mp3"></audio>
-        <audio id="fireSound" src="fire.mp3" loop></audio> <!-- Looping -->
+        <!-- Removed fire.mp3 from here since it's handled by fire.js -->
     </div>
 
     <!-- Scripts -->
     <script src="config.js"></script>
-    <script src="game.js"></script>
+    <script type="module" src="game.js"></script> <!-- Treat game.js as a module -->
 </body>
 </html>
