@@ -1,6 +1,7 @@
 // Debugging: Log when the script loads
 console.log("game.js loaded!");
 
+// Game State Variables
 let selectedWords = [];
 let remainingTries = 4;
 let gameActive = true;
@@ -8,13 +9,53 @@ let categoriesSolved = 0;
 let timerInterval;
 let startTime;
 
-// Function to start the timer
+// Audio Elements
+const portalEnterAudio = document.getElementById('portal-enter');
+const portalExitAudio = document.getElementById('portal-exit');
+const fireAudio = document.getElementById('fireSound');
+const buttonSound = document.getElementById('buttonSound');
+const clickSound = document.getElementById('clickSound');
+const selectSound = document.getElementById('selectSound');
+const deselectSound = document.getElementById('deselectSound');
+const hurtSounds = [
+    document.getElementById('hurtSound1'),
+    document.getElementById('hurtSound2'),
+    document.getElementById('hurtSound3')
+];
+const categorySounds = {
+    purple: document.getElementById('purple-categ'),
+    blue: document.getElementById('blue-categ'),
+    green: document.getElementById('green-categ'),
+    yellow: document.getElementById('yellow-categ')
+};
+
+// Preload Audio Files
+function preloadAudio() {
+    const audioElements = [
+        portalEnterAudio,
+        portalExitAudio,
+        fireAudio,
+        buttonSound,
+        clickSound,
+        selectSound,
+        deselectSound,
+        ...hurtSounds,
+        ...Object.values(categorySounds)
+    ];
+
+    audioElements.forEach(audio => {
+        audio.preload = 'auto';
+        audio.load();
+    });
+}
+
+// Start the Timer
 function startTimer() {
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
 }
 
-// Function to update the timer display
+// Update the Timer Display
 function updateTimer() {
     const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Time in seconds
     const hours = Math.floor(elapsedTime / 3600);
@@ -31,14 +72,14 @@ function updateTimer() {
     document.getElementById('timer').textContent = formattedTime;
 }
 
-// Function to stop the timer
+// Stop the Timer
 function stopTimer() {
     clearInterval(timerInterval);
 }
 
-// Start the game when the start screen is clicked
-document.getElementById('startScreen').addEventListener('click', function() {
-    console.log("Start screen clicked!"); // Debugging line
+// Start the Game
+function startGame() {
+    console.log("Start screen clicked!");
 
     // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
@@ -47,81 +88,44 @@ document.getElementById('startScreen').addEventListener('click', function() {
     document.getElementById('loadingScreen').classList.remove('hidden');
 
     // Play portal-enter.mp3
-    const portalEnterAudio = document.getElementById('portal-enter');
     portalEnterAudio.play().catch(error => {
-        console.error('Error playing portal-enter.mp3:', error); // Debugging line
+        console.error('Error playing portal-enter.mp3:', error);
     });
 
-    // Wait for 4 seconds (duration of the loading screen and audio)
-    setTimeout(() => {
-        // Hide the loading screen
+    // After portal-enter.mp3 finishes, play portal-exit.mp3 and fire.mp3
+    portalEnterAudio.onended = () => {
+        portalExitAudio.play().catch(error => {
+            console.error('Error playing portal-exit.mp3:', error);
+        });
+
+        // Hide the loading screen and show the game content
         document.getElementById('loadingScreen').classList.add('hidden');
+        document.getElementById('gameContent').classList.remove('hidden');
 
-        // Play portal-exit.mp3 after 0.2 seconds
-        setTimeout(() => {
-            const portalExitSound = document.getElementById('portal-exit');
-            const fireSound = document.getElementById('fireSound');
-
-            // Play portal-exit.mp3
-            portalExitSound.play().catch(error => {
-                console.error('Error playing portal-exit.mp3:', error); // Debugging line
-            });
-
-            // Play fire.mp3 on loop
-            fireSound.loop = true; // Enable looping
-            fireSound.play().catch(error => {
+        // Start the fire.mp3 loop after portal-exit.mp3 finishes
+        portalExitAudio.onended = () => {
+            fireAudio.loop = true;
+            fireAudio.play().catch(error => {
                 console.error('Error playing fire.mp3:', error);
             });
-        }, 200);
+        };
 
-        // Show the game content and start the game
-        document.getElementById('gameContent').classList.remove('hidden');
+        // Initialize the game and start the timer
         initializeGame();
         startTimer();
         document.getElementById('timer').style.display = 'block';
-    }, 4000);
-});
-
-// Array of sound files
-const soundFiles = [
-    document.getElementById('hurtSound1'),
-    document.getElementById('hurtSound2'),
-    document.getElementById('hurtSound3')
-];
-
-// Set animation delays on hearts initially
-document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
-    circle.style.setProperty('--delay', `${index * 0.1}s`);
-});
-
-let currentSoundIndex = 0;
-
-// Function to play the next sound effect for mistakes
-function playNextSound() {
-    const sound = soundFiles[currentSoundIndex];
-    sound.currentTime = 0;
-    sound.play();
-    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+    };
 }
 
-function handleMistake() {
-    playNextSound();
-}
-
-function playSound(soundId) {
-    const sound = document.getElementById(soundId);
+// Play Sound Effect
+function playSound(sound) {
     if (sound) {
         sound.currentTime = 0;
         sound.play().catch(error => console.error(`Error playing sound: ${error}`));
     }
 }
 
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => {
-        playSound('clickSound');
-    });
-});
-
+// Toggle Word Selection
 function toggleWord(word, element) {
     if (!gameActive) return;
 
@@ -130,16 +134,16 @@ function toggleWord(word, element) {
         if (selectedWords.length < 4) {
             selectedWords.push(word);
             element.classList.add('selected');
-            playSound('selectSound');
+            playSound(selectSound);
         }
     } else {
         selectedWords.splice(index, 1);
         element.classList.remove('selected');
-        playSound('deselectSound');
+        playSound(deselectSound);
     }
 }
 
-// Initialize the game grid
+// Initialize the Game Grid
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
@@ -165,6 +169,7 @@ function initializeGame() {
     updateTriesDisplay();
 }
 
+// Submit a Group of Words
 function submitGroup() {
     if (!gameActive || selectedWords.length !== 4) return;
 
@@ -181,11 +186,9 @@ function submitGroup() {
         );
 
         if (partialMatches.length > 0) {
-            // If the player is one away, deduct a try and show the One Way Box
-            handleIncorrectSubmit(); // Deduct a try
-            showOneWayBox(); // Show the One Way Box
+            handleIncorrectSubmit();
+            showOneWayBox();
         } else {
-            // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
         }
     }
@@ -196,35 +199,26 @@ function submitGroup() {
     checkGameEnd();
 }
 
+// Show "One Way" Box
 function showOneWayBox() {
     const oneWayBox = document.getElementById('oneWayBox');
     oneWayBox.classList.remove('hidden');
     oneWayBox.classList.add('fade-in');
 
-    // Play the button.mp3 sound effect
-    const buttonSound = document.getElementById('buttonSound');
-    if (buttonSound) {
-        buttonSound.currentTime = 0; // Reset the sound to the start
-        buttonSound.play().catch(error => {
-            console.error('Error playing button.mp3:', error);
-        });
-    } else {
-        console.error('Sound element not found');
-    }
+    playSound(buttonSound);
 
-    // Hide the box after 2 seconds
     setTimeout(() => {
         oneWayBox.classList.remove('fade-in');
         oneWayBox.classList.add('fade-out');
 
-        // Remove the box from the DOM after the fade-out animation
         setTimeout(() => {
             oneWayBox.classList.add('hidden');
             oneWayBox.classList.remove('fade-out');
-        }, 1000); // Fade-out duration
-    }, 2000); // Display duration (2 seconds)
+        }, 1000);
+    }, 2000);
 }
 
+// Handle Correct Category
 function handleCorrectCategory(category) {
     category.solved = true;
     categoriesSolved++;
@@ -236,7 +230,7 @@ function handleCorrectCategory(category) {
         <div>${category.words.join(', ')}</div>
     `;
     document.getElementById('categoriesContainer').appendChild(categoryBox);
-    playSound(`${category.color}-categ`);
+    playSound(categorySounds[category.color]);
 
     const gameGrid = document.getElementById('gameGrid');
     Array.from(gameGrid.children).forEach(box => {
@@ -246,19 +240,17 @@ function handleCorrectCategory(category) {
     });
 }
 
+// Handle Incorrect Submission
 function handleIncorrectSubmit() {
-    const previousTries = remainingTries;
     remainingTries--;
 
-    // Add blink to all hearts first
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
 
-    // After blink duration, update display
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
-        handleMistake();
+        playSound(hurtSounds[Math.floor(Math.random() * hurtSounds.length)]);
 
         if (remainingTries === 0) {
             gameActive = false;
@@ -268,36 +260,11 @@ function handleIncorrectSubmit() {
     }, 200);
 }
 
-function revealAnswers() {
-    const unsolvedCategories = Object.values(categories)
-        .filter(category => !category.solved)
-        .sort((a, b) => categoryPriority.indexOf(a.color) - categoryPriority.indexOf(b.color));
-
-    unsolvedCategories.forEach((category, index) => {
-        setTimeout(() => {
-            const gameGrid = document.getElementById('gameGrid');
-            Array.from(gameGrid.children).forEach(box => {
-                if (category.words.includes(box.textContent)) {
-                    box.remove();
-                }
-            });
-
-            const categoryBox = document.createElement('div');
-            categoryBox.className = `category-box ${category.color}`;
-            categoryBox.innerHTML = `
-                <div><strong>${category.name}</strong></div>
-                <div>${category.words.join(', ')}</div>
-            `;
-            document.getElementById('categoriesContainer').appendChild(categoryBox);
-            playSound(`${category.color}-categ`);
-        }, index * 1000);
-    });
-}
-
+// Update Tries Display
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     const shouldShake = remainingTries === 1;
-    
+
     circles.forEach((circle, index) => {
         const isLost = index >= remainingTries;
         circle.classList.toggle('white', isLost);
@@ -305,6 +272,7 @@ function updateTriesDisplay() {
     });
 }
 
+// Shuffle Words
 function shuffleWords() {
     if (!gameActive) return;
 
@@ -315,6 +283,7 @@ function shuffleWords() {
     boxes.forEach(box => gameGrid.appendChild(box));
 }
 
+// Deselect All Words
 function deselectAll() {
     selectedWords = [];
     document.querySelectorAll('.word-box').forEach(box => {
@@ -322,17 +291,28 @@ function deselectAll() {
     });
 }
 
+// Check if the Game is Over
 function checkGameEnd() {
     if (categoriesSolved === 4) {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
-        stopTimer(); // Stop the timer when the game ends
+        stopTimer();
     }
 }
 
+// Shuffle Array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+// Initialize Event Listeners
+document.getElementById('startScreen').addEventListener('click', startGame);
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => playSound(clickSound));
+});
+
+// Preload Audio Files on Page Load
+preloadAudio();
