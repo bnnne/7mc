@@ -1,9 +1,6 @@
 // Debugging: Log when the script loads
 console.log("game.js loaded!");
 
-// import functions from fire.js
-import { initAudioContext, loadFireSound, playFireSound, stopFireSound } from './fire.js';
-
 let selectedWords = [];
 let remainingTries = 4;
 let gameActive = true;
@@ -41,7 +38,7 @@ function stopTimer() {
 
 // Start the game when the start screen is clicked
 document.getElementById('startScreen').addEventListener('click', function() {
-    console.log("Start screen clicked!");
+    console.log("Start screen clicked!"); // Debugging line
 
     // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
@@ -55,11 +52,6 @@ document.getElementById('startScreen').addEventListener('click', function() {
         console.error('Error playing portal-enter.mp3:', error); // Debugging line
     });
 
-    initAudioContext();
-    loadFireSound().then(() => {
-        console.log('Fire sound loaded');
-    });
-
     // Wait for 4 seconds (duration of the loading screen and audio)
     setTimeout(() => {
         // Hide the loading screen
@@ -68,11 +60,18 @@ document.getElementById('startScreen').addEventListener('click', function() {
         // Play portal-exit.mp3 after 0.2 seconds
         setTimeout(() => {
             const portalExitSound = document.getElementById('portal-exit');
+            const fireSound = document.getElementById('fireSound');
+
+            // Play portal-exit.mp3
             portalExitSound.play().catch(error => {
-                console.error('Error playing portal-exit.mp3:', error);
+                console.error('Error playing portal-exit.mp3:', error); // Debugging line
             });
 
-            playFireSound();
+            // Play fire.mp3 on loop
+            fireSound.loop = true; // Enable looping
+            fireSound.play().catch(error => {
+                console.error('Error playing fire.mp3:', error);
+            });
         }, 200);
 
         // Show the game content and start the game
