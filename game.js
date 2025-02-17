@@ -9,44 +9,46 @@ let categoriesSolved = 0;
 let timerInterval;
 let startTime;
 
-// Audio Elements
-const portalEnterAudio = document.getElementById('portal-enter');
-const portalExitAudio = document.getElementById('portal-exit');
-const fireAudio = document.getElementById('fireSound');
-const buttonSound = document.getElementById('buttonSound');
-const clickSound = document.getElementById('clickSound');
-const selectSound = document.getElementById('selectSound');
-const deselectSound = document.getElementById('deselectSound');
-const hurtSounds = [
-    document.getElementById('hurtSound1'),
-    document.getElementById('hurtSound2'),
-    document.getElementById('hurtSound3')
-];
-const categorySounds = {
-    purple: document.getElementById('purple-categ'),
-    blue: document.getElementById('blue-categ'),
-    green: document.getElementById('green-categ'),
-    yellow: document.getElementById('yellow-categ')
-};
+// Web Audio API Setup
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let fireSource;
 
 // Preload Audio Files
-function preloadAudio() {
-    const audioElements = [
-        portalEnterAudio,
-        portalExitAudio,
-        fireAudio,
-        buttonSound,
-        clickSound,
-        selectSound,
-        deselectSound,
-        ...hurtSounds,
-        ...Object.values(categorySounds)
-    ];
+async function preloadAudio() {
+    const audioFiles = {
+        portalEnter: 'audio/portal-enter.mp3',
+        portalExit: 'audio/portal-exit.mp3',
+        fire: 'audio/fire.mp3',
+        button: 'audio/button.mp3',
+        click: 'audio/button-click.mp3',
+        select: 'audio/button-click.mp3',
+        deselect: 'audio/button-click.mp3',
+        hurt1: 'audio/hurt-fire1.mp3',
+        hurt2: 'audio/hurt-fire2.mp3',
+        hurt3: 'audio/hurt-fire3.mp3',
+        purple: 'audio/purple-categ.mp3',
+        blue: 'audio/blue-categ.mp3',
+        green: 'audio/green-categ.mp3',
+        yellow: 'audio/yellow-categ.mp3'
+    };
 
-    audioElements.forEach(audio => {
-        audio.preload = 'auto';
-        audio.load();
-    });
+    const buffers = {};
+    for (const [key, url] of Object.entries(audioFiles)) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        buffers[key] = await audioContext.decodeAudioData(arrayBuffer);
+    }
+    return buffers;
+}
+
+// Play Audio with Web Audio API
+function playAudio(buffer, loop = false) {
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.loop = loop;
+    source.connect(audioContext.destination);
+    source.start();
+    return source;
 }
 
 // Start the Timer
@@ -78,7 +80,7 @@ function stopTimer() {
 }
 
 // Start the Game
-function startGame() {
+async function startGame() {
     console.log("Start screen clicked!");
 
     // Hide the start screen
@@ -87,42 +89,30 @@ function startGame() {
     // Show the loading screen
     document.getElementById('loadingScreen').classList.remove('hidden');
 
-    // Play portal-enter.mp3
-    portalEnterAudio.play().catch(error => {
-        console.error('Error playing portal-enter.mp3:', error);
-    });
+    // Preload audio files
+    const buffers = await preloadAudio();
 
-    // After portal-enter.mp3 finishes, play portal-exit.mp3 and fire.mp3
-    portalEnterAudio.onended = () => {
-        portalExitAudio.play().catch(error => {
-            console.error('Error playing portal-exit.mp3:', error);
-        });
+    // Play portal-enter.mp3
+    playAudio(buffers.portalEnter);
+
+    // After portal-enter.mp3 finishes, play portal-exit.mp3
+    setTimeout(() => {
+        playAudio(buffers.portalExit);
 
         // Hide the loading screen and show the game content
         document.getElementById('loadingScreen').classList.add('hidden');
         document.getElementById('gameContent').classList.remove('hidden');
 
         // Start the fire.mp3 loop after portal-exit.mp3 finishes
-        portalExitAudio.onended = () => {
-            fireAudio.loop = true;
-            fireAudio.play().catch(error => {
-                console.error('Error playing fire.mp3:', error);
-            });
-        };
+        setTimeout(() => {
+            fireSource = playAudio(buffers.fire, true); // Loop fire.mp3
+        }, 200); // Adjust this delay to match the duration of portal-exit.mp3
+    }, 4000); // Adjust this delay to match the duration of portal-enter.mp3
 
-        // Initialize the game and start the timer
-        initializeGame();
-        startTimer();
-        document.getElementById('timer').style.display = 'block';
-    };
-}
-
-// Play Sound Effect
-function playSound(sound) {
-    if (sound) {
-        sound.currentTime = 0;
-        sound.play().catch(error => console.error(`Error playing sound: ${error}`));
-    }
+    // Initialize the game and start the timer
+    initializeGame();
+    startTimer();
+    document.getElementById('timer').style.display = 'block';
 }
 
 // Toggle Word Selection
@@ -134,12 +124,12 @@ function toggleWord(word, element) {
         if (selectedWords.length < 4) {
             selectedWords.push(word);
             element.classList.add('selected');
-            playSound(selectSound);
+            playAudio(buffers.select);
         }
     } else {
         selectedWords.splice(index, 1);
         element.classList.remove('selected');
-        playSound(deselectSound);
+        playAudio(buffers.deselect);
     }
 }
 
@@ -205,7 +195,7 @@ function showOneWayBox() {
     oneWayBox.classList.remove('hidden');
     oneWayBox.classList.add('fade-in');
 
-    playSound(buttonSound);
+    playAudio(buffers.button);
 
     setTimeout(() => {
         oneWayBox.classList.remove('fade-in');
@@ -230,7 +220,7 @@ function handleCorrectCategory(category) {
         <div>${category.words.join(', ')}</div>
     `;
     document.getElementById('categoriesContainer').appendChild(categoryBox);
-    playSound(categorySounds[category.color]);
+    playAudio(buffers[category.color]);
 
     const gameGrid = document.getElementById('gameGrid');
     Array.from(gameGrid.children).forEach(box => {
@@ -250,7 +240,7 @@ function handleIncorrectSubmit() {
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
-        playSound(hurtSounds[Math.floor(Math.random() * hurtSounds.length)]);
+        playAudio(buffers[`hurt${Math.floor(Math.random() * 3) + 1}`]);
 
         if (remainingTries === 0) {
             gameActive = false;
@@ -311,7 +301,7 @@ function shuffleArray(array) {
 // Initialize Event Listeners
 document.getElementById('startScreen').addEventListener('click', startGame);
 document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => playSound(clickSound));
+    button.addEventListener('click', () => playAudio(buffers.click));
 });
 
 // Preload Audio Files on Page Load
