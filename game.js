@@ -1,6 +1,7 @@
 // Debugging: Log when the script loads
 console.log("game.js loaded!");
 
+// Game state variables
 let selectedWords = [];
 let remainingTries = 4;
 let gameActive = true;
@@ -8,70 +9,61 @@ let categoriesSolved = 0;
 let timerInterval;
 let startTime;
 
-// Function to start the timer
+// Array of sound files for mistakes
+const mistakeSounds = [
+    document.getElementById('hurtSound1'),
+    document.getElementById('hurtSound2'),
+    document.getElementById('hurtSound3')
+];
+let currentSoundIndex = 0;
+
+// Timer functions
 function startTimer() {
     startTime = Date.now();
     timerInterval = setInterval(updateTimer, 1000);
 }
 
-// Function to update the timer display
 function updateTimer() {
     const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Time in seconds
     const hours = Math.floor(elapsedTime / 3600);
     const minutes = Math.floor((elapsedTime % 3600) / 60);
     const seconds = elapsedTime % 60;
 
-    let formattedTime;
-    if (hours > 0) {
-        formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    } else {
-        formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }
+    const formattedTime = hours > 0
+        ? `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+        : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
     document.getElementById('timer').textContent = formattedTime;
 }
 
-// Function to stop the timer
 function stopTimer() {
     clearInterval(timerInterval);
 }
 
 // Start the game when the start screen is clicked
-document.getElementById('startScreen').addEventListener('click', function() {
-    console.log("Start screen clicked!"); // Debugging line
+document.getElementById('startScreen').addEventListener('click', () => {
+    console.log("Start screen clicked!");
 
-    // Hide the start screen
+    // Hide the start screen and show the loading screen
     document.getElementById('startScreen').style.display = 'none';
-
-    // Show the loading screen
     document.getElementById('loadingScreen').classList.remove('hidden');
 
-    // Play portal-enter.mp3
+    // Play portal-enter sound
     const portalEnterAudio = document.getElementById('portal-enter');
-    portalEnterAudio.play().catch(error => {
-        console.error('Error playing portal-enter.mp3:', error); // Debugging line
-    });
+    portalEnterAudio.play().catch(error => console.error('Error playing portal-enter.mp3:', error));
 
-    // Wait for 4 seconds (duration of the loading screen and audio)
+    // Wait for 4 seconds (loading screen duration)
     setTimeout(() => {
-        // Hide the loading screen
         document.getElementById('loadingScreen').classList.add('hidden');
 
-        // Play portal-exit.mp3 after 0.2 seconds
+        // Play portal-exit sound and start fire sound
         setTimeout(() => {
             const portalExitSound = document.getElementById('portal-exit');
             const fireSound = document.getElementById('fireSound');
 
-            // Play portal-exit.mp3
-            portalExitSound.play().catch(error => {
-                console.error('Error playing portal-exit.mp3:', error); // Debugging line
-            });
-
-            // Play fire.mp3 on loop
-            fireSound.loop = true; // Enable looping
-            fireSound.play().catch(error => {
-                console.error('Error playing fire.mp3:', error);
-            });
+            portalExitSound.play().catch(error => console.error('Error playing portal-exit.mp3:', error));
+            fireSound.loop = true;
+            fireSound.play().catch(error => console.error('Error playing fire.mp3:', error));
         }, 200);
 
         // Show the game content and start the game
@@ -82,32 +74,7 @@ document.getElementById('startScreen').addEventListener('click', function() {
     }, 4000);
 });
 
-// Array of sound files
-const soundFiles = [
-    document.getElementById('hurtSound1'),
-    document.getElementById('hurtSound2'),
-    document.getElementById('hurtSound3')
-];
-
-// Set animation delays on hearts initially
-document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
-    circle.style.setProperty('--delay', `${index * 0.1}s`);
-});
-
-let currentSoundIndex = 0;
-
-// Function to play the next sound effect for mistakes
-function playNextSound() {
-    const sound = soundFiles[currentSoundIndex];
-    sound.currentTime = 0;
-    sound.play();
-    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
-}
-
-function handleMistake() {
-    playNextSound();
-}
-
+// Play sound effects
 function playSound(soundId) {
     const sound = document.getElementById(soundId);
     if (sound) {
@@ -116,12 +83,15 @@ function playSound(soundId) {
     }
 }
 
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => {
-        playSound('clickSound');
-    });
-});
+// Play the next mistake sound
+function playNextMistakeSound() {
+    const sound = mistakeSounds[currentSoundIndex];
+    sound.currentTime = 0;
+    sound.play();
+    currentSoundIndex = (currentSoundIndex + 1) % mistakeSounds.length;
+}
 
+// Toggle word selection
 function toggleWord(word, element) {
     if (!gameActive) return;
 
@@ -165,6 +135,7 @@ function initializeGame() {
     updateTriesDisplay();
 }
 
+// Submit a group of selected words
 function submitGroup() {
     if (!gameActive || selectedWords.length !== 4) return;
 
@@ -181,14 +152,10 @@ function submitGroup() {
         );
 
         if (partialMatches.length > 0) {
-            // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
-            setTimeout(() => {
-                showOneAwayBox(); // Show the One Away Box after the mistake sound
-            }, 500); // Adjust the delay to match the mistake sound duration
+            setTimeout(() => showOneAwayBox(), 500); // Show "One Away" box after mistake sound
         } else {
-            // If the player is not one away, handle as a regular mistake
-            handleIncorrectSubmit();
+            handleIncorrectSubmit(); // Regular mistake
         }
     }
 
@@ -198,21 +165,14 @@ function submitGroup() {
     checkGameEnd();
 }
 
+// Show the "One Away" box
 function showOneAwayBox() {
     const oneAwayBox = document.getElementById('oneWayBox');
     oneAwayBox.classList.remove('hidden');
     oneAwayBox.classList.add('fade-in');
 
-    // Play the button.mp3 sound effect
-    const buttonSound = document.getElementById('buttonSound');
-    if (buttonSound) {
-        buttonSound.currentTime = 0; // Reset the sound to the start
-        buttonSound.play().catch(error => {
-            console.error('Error playing button.mp3:', error);
-        });
-    } else {
-        console.error('Sound element not found');
-    }
+    // Play the button sound effect
+    playSound('buttonSound');
 
     // Hide the box after 2 seconds
     setTimeout(() => {
@@ -227,6 +187,7 @@ function showOneAwayBox() {
     }, 2000); // Display duration (2 seconds)
 }
 
+// Handle correct category submission
 function handleCorrectCategory(category) {
     category.solved = true;
     categoriesSolved++;
@@ -240,6 +201,7 @@ function handleCorrectCategory(category) {
     document.getElementById('categoriesContainer').appendChild(categoryBox);
     playSound(`${category.color}-categ`);
 
+    // Remove solved words from the game grid
     const gameGrid = document.getElementById('gameGrid');
     Array.from(gameGrid.children).forEach(box => {
         if (category.words.includes(box.textContent)) {
@@ -248,19 +210,19 @@ function handleCorrectCategory(category) {
     });
 }
 
+// Handle incorrect submission
 function handleIncorrectSubmit() {
-    const previousTries = remainingTries;
     remainingTries--;
 
-    // Add blink to all hearts first
+    // Add blink to all hearts
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
 
-    // After blink duration, update display
+    // Update display after blink duration
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
-        handleMistake();
+        playNextMistakeSound();
 
         if (remainingTries === 0) {
             gameActive = false;
@@ -270,6 +232,7 @@ function handleIncorrectSubmit() {
     }, 200);
 }
 
+// Reveal unsolved categories at the end of the game
 function revealAnswers() {
     const unsolvedCategories = Object.values(categories)
         .filter(category => !category.solved)
@@ -296,10 +259,11 @@ function revealAnswers() {
     });
 }
 
+// Update the tries display
 function updateTriesDisplay() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     const shouldShake = remainingTries === 1;
-    
+
     circles.forEach((circle, index) => {
         const isLost = index >= remainingTries;
         circle.classList.toggle('white', isLost);
@@ -307,6 +271,7 @@ function updateTriesDisplay() {
     });
 }
 
+// Shuffle words in the game grid
 function shuffleWords() {
     if (!gameActive) return;
 
@@ -317,6 +282,7 @@ function shuffleWords() {
     boxes.forEach(box => gameGrid.appendChild(box));
 }
 
+// Deselect all words
 function deselectAll() {
     selectedWords = [];
     document.querySelectorAll('.word-box').forEach(box => {
@@ -324,14 +290,16 @@ function deselectAll() {
     });
 }
 
+// Check if the game has ended
 function checkGameEnd() {
     if (categoriesSolved === 4) {
         gameActive = false;
         document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
-        stopTimer(); // Stop the timer when the game ends
+        stopTimer();
     }
 }
 
+// Shuffle an array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
