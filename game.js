@@ -254,18 +254,25 @@ function handleIncorrectSubmit() {
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
 
+    // Play the hurt sound effect
+    playNextSound(); // Play the hurt sound
+
     // After blink duration, update display
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
-        handleMistake();
 
-        if (remainingTries === 0) {
-            gameActive = false;
-            document.getElementById('message').textContent = "you were prob close lol..... or not";
-            revealAnswers();
-        }
+        // Show the "One Away" box and play nether-button.mp3 after a short delay
+        setTimeout(() => {
+            showOneAwayBox(); // Show the box and play nether-button.mp3
+        }, 200); // Delay to sync with the hurt sound effect
     }, 200);
+
+    if (remainingTries === 0) {
+        gameActive = false;
+        document.getElementById('message').textContent = "you were prob close lol..... or not";
+        revealAnswers();
+    }
 }
 
 function revealAnswers() {
