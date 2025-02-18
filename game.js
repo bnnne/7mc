@@ -99,6 +99,11 @@ let currentSoundIndex = 0;
 // Function to play the next sound effect for mistakes
 function playNextSound() {
     const sound = soundFiles[currentSoundIndex];
+    if (!sound) {
+        console.error("Sound file not found at index:", currentSoundIndex);
+        return;
+    }
+
     sound.currentTime = 0; // Reset the sound to the start
     sound.play().catch(error => {
         console.error('Error playing hurt sound:', error);
@@ -265,6 +270,9 @@ function handleIncorrectSubmit() {
     // Add blink to all hearts first
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
+
+    // Play the hurt sound effect for all mistakes
+    playNextSound(); // Play the hurt sound
 
     // After blink duration, update display
     setTimeout(() => {
