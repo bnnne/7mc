@@ -255,17 +255,21 @@ function handleIncorrectSubmit() {
     circles.forEach(circle => circle.classList.add('blink'));
 
     // Play the hurt sound effect
-    playNextSound(); // Play the hurt sound
+    const hurtSound = playNextSound(); // Play the hurt sound and get the sound element
 
     // After blink duration, update display
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
 
-        // Show the "One Away" box and play nether-button.mp3 after a short delay
+        // Calculate the delay for nether-button.mp3 and the box
+        const hurtSoundDuration = hurtSound.duration * 1000; // Convert to milliseconds
+        const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
+
+        // Show the "One Away" box and play nether-button.mp3 after the delay
         setTimeout(() => {
             showOneAwayBox(); // Show the box and play nether-button.mp3
-        }, 200); // Delay to sync with the hurt sound effect
+        }, hurtSoundDuration + delayAfterHurtSound);
     }, 200);
 
     if (remainingTries === 0) {
@@ -273,6 +277,14 @@ function handleIncorrectSubmit() {
         document.getElementById('message').textContent = "you were prob close lol..... or not";
         revealAnswers();
     }
+}
+
+function playNextSound() {
+    const sound = soundFiles[currentSoundIndex];
+    sound.currentTime = 0;
+    sound.play();
+    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+    return sound; // Return the sound element to access its duration
 }
 
 function revealAnswers() {
