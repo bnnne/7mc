@@ -183,10 +183,14 @@ function submitGroup() {
             selectedWords.filter(word => cat.words.includes(word)).length === 3
         );
 
+        console.log("Partial Matches:", partialMatches); // Debugging line
+
         if (partialMatches.length > 0) {
             // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
-            const hurtSound = playNextSound(); // Play the hurt sound and get the sound element
+
+            // Play the hurt sound effect
+            const hurtSound = playNextSound();
 
             // Calculate the delay for nether-button.mp3 and the box
             const hurtSoundDuration = hurtSound.duration * 1000; // Convert to milliseconds
