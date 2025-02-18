@@ -189,11 +189,8 @@ function submitGroup() {
             // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
 
-            // Play the hurt sound effect
-            const hurtSound = playNextSound();
-
             // Calculate the delay for nether-button.mp3 and the box
-            const hurtSoundDuration = hurtSound.duration * 1000; // Convert to milliseconds
+            const hurtSoundDuration = soundFiles[currentSoundIndex - 1].duration * 1000; // Convert to milliseconds
             const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
 
             // Show the "One Away" box and play nether-button.mp3 after the delay
