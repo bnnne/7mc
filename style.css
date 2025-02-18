@@ -1,3 +1,4 @@
+/* Fonts */
 @font-face {
     font-family: 'Minecraft';
     src: url('MinecraftRegular-Bmg3.otf') format('opentype');
@@ -12,6 +13,27 @@
     font-style: normal;
 }
 
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Minecraft', Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('bastion.png') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+}
+
 /* Start Screen */
 #startScreen {
     position: fixed;
@@ -19,7 +41,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('portal.gif') repeat; /* Tile the animated GIF */
+    background: url('portal.gif') repeat;
+    background-size: cover;
     z-index: 1000;
     cursor: pointer;
 }
@@ -32,25 +55,31 @@
     width: 100%;
     height: 100%;
     background: url('portal-static.png') repeat;
+    background-size: cover;
     z-index: 1001;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 3vh;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Keep text shadow here */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* Loading Text */
-#loadingText {
-    font-size: 1.5em; /* Adjusted to be smaller */
-}
-
-/* Hide loading screen initially */
 #loadingScreen.hidden {
     display: none;
 }
 
-/* Hide game content initially */
+/* Game Content */
+#gameContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2vh 0;
+}
+
 .hidden {
     display: none;
 }
@@ -58,87 +87,46 @@
 /* Timer */
 #timer {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 1.5em;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    z-index: 1001; /* Ensure it's above other elements */
-    display: none; /* Hide the timer initially */
+    top: 2vh;
+    right: 2vw;
+    font-size: 3vh;
+    z-index: 1001;
 }
 
-/* Show the timer when the game content is displayed and the loading screen is hidden */
-#gameContent:not(.hidden) ~ #timer {
-    display: block;
-}
-
-body {
-    font-family: 'Minecraft', Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 20px;
-    background: url('bastion.png') no-repeat center center fixed;
-    background-size: cover;
-    overflow: hidden;
-    height: 100vh;
-}
-
+/* Heading */
 h1 {
-    font-family: 'Minecraft', Arial, sans-serif;
-    color: white;
-    margin-bottom: 30px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 5vh;
+    margin-bottom: 3vh;
     text-align: center;
-    width: 100%;
 }
 
-* {
-    font-family: 'Minecraft', Arial, sans-serif;
-}
-
-/* Word Boxes */
+/* Game Grid */
 #gameGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-    width: 800px;
-    justify-items: center;
-    align-items: center;
-}
-
-.word-box, .category-box {
-    box-sizing: border-box;
+    gap: 2%;
+    width: 100%;
+    margin-bottom: 2vh;
 }
 
 .word-box {
-    background: 
-        url('blackstone.png') center/cover,
-        rgba(255, 255, 255, 0.1);
+    background: url('blackstone.png') center/cover, rgba(255, 255, 255, 0.1);
     border: 2px solid black;
-    padding: 15px;
+    padding: 2%;
     text-align: center;
     cursor: pointer;
     border-radius: 5px;
-    user-select: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 120px;
-    min-width: 0;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    transition: all 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-    position: relative;
-    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Ensure square boxes */
+    font-size: 2.5vh;
+    transition: all 0.2s ease;
 }
 
 .word-box:hover {
-    border-color: #b026ff; /* Neon purple */
+    border-color: #b026ff;
     box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
@@ -147,80 +135,55 @@ h1 {
     box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
-.word-box.selected::before {
-    background: transparent;
-}
-
-.word-box > * {
-    position: relative;
-    z-index: 2;
-}
-
 /* Categories Container */
 #categoriesContainer {
-    width: 800px;
-    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 2vh;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 2%;
 }
 
-/* Category Boxes */
 .category-box {
     color: white;
-    padding: 15px;
+    padding: 2%;
     border-radius: 5px;
     text-align: center;
-    font-weight: normal;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 120px;
-    min-width: 0;
-    box-sizing: border-box;
-    margin: 0;
-    background-repeat: repeat-x;
-    background-size: auto 100%;
-    background-position: left top;
-    position: relative;
+    height: 20vh;
+    background-size: cover;
+    font-size: 2vh;
 }
 
 .category-box div:first-child {
     font-weight: bold;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1vh;
 }
 
-/* Tries Container */
 /* Tries Container */
 #triesContainer {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 2%;
+    margin-bottom: 2vh;
 }
 
 #triesContainer p {
     margin: 0;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-size: 2.5vh;
 }
 
 #triesCircles {
     display: flex;
-    gap: 5px;
-    align-items: center;
+    gap: 1%;
 }
 
 .circle {
-    width: 28px;
-    height: 28px;
+    width: 4vh;
+    height: 4vh;
     background-image: url('heart-full.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -236,57 +199,22 @@ h1 {
     transition: background-image 0.2s ease;
 }
 
-@keyframes gentle-shake {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-2px); }
-    50% { transform: translateY(1px); }
-    75% { transform: translateY(-2px); }
-}
-
-/* Unified shake animation for all hearts */
-.circle.shake {
-    animation: gentle-shake 0.4s infinite;
-    transform-origin: center bottom;
-}
-
-/* Remove separate white.shake animation */
-.circle.white.shake {
-    animation: gentle-shake 0.4s infinite;
-}
-
-/* Staggered timing for all shake elements */
-.circle.shake:nth-child(1) { animation-delay: 0s; }
-.circle.shake:nth-child(2) { animation-delay: 0.1s; }
-.circle.shake:nth-child(3) { animation-delay: 0.2s; }
-.circle.shake:nth-child(4) { animation-delay: 0.3s; }
-
 /* Buttons */
 #buttons {
     display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 2%;
+    margin-bottom: 2vh;
     justify-content: center;
 }
 
-/* Buttons */
 button {
-    /* Set dimensions matching your image aspect ratio */
-    width: 180px;  /* Adjust based on needed size */
-    height: 48px;  /* 180 * (255/955) ≈ 48 */
-    
-    /* Image handling */
+    width: 20vw;
+    max-width: 200px;
+    height: 6vh;
     background: url('button.png') center/cover no-repeat;
-    image-rendering: crisp-edges; /* Better for scaled pixel art */
     border: none;
-    
-    /* Box model fix */
-    box-sizing: border-box;
-    padding: 5px 15px;
-    
-    /* Text styling */
     color: white;
-    font-family: 'Minecraft', Arial, sans-serif;
-    font-size: 1.1em;
+    font-size: 2vh;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
@@ -296,66 +224,36 @@ button:hover {
 }
 
 button:active {
-    background-image: url('button.png'); /* Return to normal when clicked */
+    background-image: url('button.png');
 }
 
 /* Message */
 #message {
     text-align: center;
-    font-size: 1.2em;
-    margin-top: 20px;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.category-box::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.category-box div {
-    position: relative;
-    z-index: 2;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* Center the game content */
-#gameContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+    font-size: 2.5vh;
+    margin-top: 2vh;
 }
 
 /* One Way Box */
 #oneWayBox {
     position: fixed;
-    bottom: 20px;
+    bottom: 2vh;
     left: 50%;
     transform: translateX(-50%);
-    width: 110px; /* Smaller width */
-    height: 25px; /* Smaller height */
-    background-color: #1F1D24; /* Grey background */
-    border: 2px solid black; /* Black border */
-    border-radius: 5px; /* Rounded corners */
-    color: white; /* White text */
-    font-family: 'Minecraft', Arial, sans-serif;
-    font-size: 0.9em; /* Smaller font size */
-    text-align: center; /* Center text horizontally */
-    display: flex; /* Use flexbox for vertical centering */
-    align-items: center; /* Center text vertically */
-    justify-content: center; /* Center text horizontally */
+    width: 20vw;
+    height: 5vh;
+    background-color: #1F1D24;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 2vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease, visibility 1s ease;
-    z-index: 1000; /* Ensure it's above other elements */
+    z-index: 1000;
 }
 
 #oneWayBox.fade-in {
@@ -368,7 +266,57 @@ button:active {
     visibility: hidden;
 }
 
+/* Category Colors */
 .category-box.purple { background-image: url('purple-cc.png'); }
 .category-box.blue { background-image: url('blue-cc.png'); }
 .category-box.green { background-image: url('green-cc.png'); }
 .category-box.yellow { background-image: url('yellow-cc.png'); }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    #gameGrid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    }
+
+    .word-box {
+        height: 15vh;
+        font-size: 2vh;
+    }
+
+    #timer {
+        font-size: 2.5vh;
+    }
+
+    h1 {
+        font-size: 4vh;
+    }
+
+    button {
+        width: 25vw;
+        font-size: 1.8vh;
+    }
+}
+
+@media (max-width: 480px) {
+    #gameGrid {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+    }
+
+    .word-box {
+        height: 12vh;
+        font-size: 1.8vh;
+    }
+
+    #timer {
+        font-size: 2vh;
+    }
+
+    h1 {
+        font-size: 3.5vh;
+    }
+
+    button {
+        width: 30vw;
+        font-size: 1.5vh;
+    }
+}
