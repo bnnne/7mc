@@ -99,9 +99,12 @@ let currentSoundIndex = 0;
 // Function to play the next sound effect for mistakes
 function playNextSound() {
     const sound = soundFiles[currentSoundIndex];
-    sound.currentTime = 0;
-    sound.play();
+    sound.currentTime = 0; // Reset the sound to the start
+    sound.play().catch(error => {
+        console.error('Error playing hurt sound:', error);
+    });
     currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+    return sound; // Return the sound element to access its duration
 }
 
 function handleMistake() {
@@ -181,9 +184,18 @@ function submitGroup() {
         );
 
         if (partialMatches.length > 0) {
-            // If the player is one away, deduct a try and show the One Way Box
+            // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
-            showOneAwayBox(); // Show the One Way Box
+            const hurtSound = playNextSound(); // Play the hurt sound and get the sound element
+
+            // Calculate the delay for nether-button.mp3 and the box
+            const hurtSoundDuration = hurtSound.duration * 1000; // Convert to milliseconds
+            const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
+
+            // Show the "One Away" box and play nether-button.mp3 after the delay
+            setTimeout(() => {
+                showOneAwayBox(); // Show the box and play nether-button.mp3
+            }, hurtSoundDuration + delayAfterHurtSound);
         } else {
             // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
@@ -247,44 +259,23 @@ function handleCorrectCategory(category) {
 }
 
 function handleIncorrectSubmit() {
-    const previousTries = remainingTries;
     remainingTries--;
 
     // Add blink to all hearts first
     const circles = document.querySelectorAll('#triesCircles .circle');
     circles.forEach(circle => circle.classList.add('blink'));
 
-    // Play the hurt sound effect
-    const hurtSound = playNextSound(); // Play the hurt sound and get the sound element
-
     // After blink duration, update display
     setTimeout(() => {
         circles.forEach(circle => circle.classList.remove('blink'));
         updateTriesDisplay();
 
-        // Calculate the delay for nether-button.mp3 and the box
-        const hurtSoundDuration = hurtSound.duration * 1000; // Convert to milliseconds
-        const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
-
-        // Show the "One Away" box and play nether-button.mp3 after the delay
-        setTimeout(() => {
-            showOneAwayBox(); // Show the box and play nether-button.mp3
-        }, hurtSoundDuration + delayAfterHurtSound);
+        if (remainingTries === 0) {
+            gameActive = false;
+            document.getElementById('message').textContent = "you were prob close lol..... or not";
+            revealAnswers();
+        }
     }, 200);
-
-    if (remainingTries === 0) {
-        gameActive = false;
-        document.getElementById('message').textContent = "you were prob close lol..... or not";
-        revealAnswers();
-    }
-}
-
-function playNextSound() {
-    const sound = soundFiles[currentSoundIndex];
-    sound.currentTime = 0;
-    sound.play();
-    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
-    return sound; // Return the sound element to access its duration
 }
 
 function revealAnswers() {
@@ -355,4 +346,3 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
-
