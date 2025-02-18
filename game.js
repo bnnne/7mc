@@ -181,9 +181,11 @@ function submitGroup() {
         );
 
         if (partialMatches.length > 0) {
-            // If the player is one away, deduct a try and show the One Way Box
+            // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
-            showOneWayBox(); // Show the One Way Box
+            setTimeout(() => {
+                showOneAwayBox(); // Show the One Away Box after the mistake sound
+            }, 500); // Adjust the delay to match the mistake sound duration
         } else {
             // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
@@ -196,10 +198,10 @@ function submitGroup() {
     checkGameEnd();
 }
 
-function showOneWayBox() {
-    const oneWayBox = document.getElementById('oneWayBox');
-    oneWayBox.classList.remove('hidden');
-    oneWayBox.classList.add('fade-in');
+function showOneAwayBox() {
+    const oneAwayBox = document.getElementById('oneWayBox');
+    oneAwayBox.classList.remove('hidden');
+    oneAwayBox.classList.add('fade-in');
 
     // Play the button.mp3 sound effect
     const buttonSound = document.getElementById('buttonSound');
@@ -214,13 +216,13 @@ function showOneWayBox() {
 
     // Hide the box after 2 seconds
     setTimeout(() => {
-        oneWayBox.classList.remove('fade-in');
-        oneWayBox.classList.add('fade-out');
+        oneAwayBox.classList.remove('fade-in');
+        oneAwayBox.classList.add('fade-out');
 
         // Remove the box from the DOM after the fade-out animation
         setTimeout(() => {
-            oneWayBox.classList.add('hidden');
-            oneWayBox.classList.remove('fade-out');
+            oneAwayBox.classList.add('hidden');
+            oneAwayBox.classList.remove('fade-out');
         }, 1000); // Fade-out duration
     }, 2000); // Display duration (2 seconds)
 }
