@@ -201,12 +201,12 @@ function showOneAwayBox() {
     oneAwayBox.classList.remove('hidden');
     oneAwayBox.classList.add('fade-in');
 
-    // Play the button.mp3 sound effect
+    // Play the nether-button.mp3 sound effect
     const buttonSound = document.getElementById('buttonSound');
     if (buttonSound) {
         buttonSound.currentTime = 0; // Reset the sound to the start
         buttonSound.play().catch(error => {
-            console.error('Error playing button.mp3:', error);
+            console.error('Error playing nether-button.mp3:', error);
         });
     } else {
         console.error('Sound element not found');
