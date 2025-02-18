@@ -341,7 +341,7 @@ button:active {
     left: 50%;
     transform: translateX(-50%);
     width: 110px; /* Smaller width */
-    height: 25px; /* Smaller height */
+    height: 30px; /* Smaller height */
     background-color: #1F1D24; /* Grey background */
     border: 2px solid black; /* Black border */
     border-radius: 5px; /* Rounded corners */
@@ -354,7 +354,7 @@ button:active {
     justify-content: center; /* Center text horizontally */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 1s ease, visibility 1s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
     z-index: 1000; /* Ensure it's above other elements */
 }
 
