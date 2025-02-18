@@ -358,12 +358,12 @@ button:active {
     z-index: 1000; /* Ensure it's above other elements */
 }
 
-#oneWayBox.fade-in {
+#oneAwayBox.fade-in {
     opacity: 1;
     visibility: visible;
 }
 
-#oneWayBox.fade-out {
+#oneAwayBox.fade-out {
     opacity: 0;
     visibility: hidden;
 }
