@@ -218,6 +218,10 @@ function showOneAwayBox() {
     const oneAwayBox = document.getElementById('oneAwayBox');
     const buttonSound = document.getElementById('buttonSound');
 
+    // Debugging: Log the button sound element and source
+    console.log('Button sound element:', buttonSound);
+    console.log('Button sound source:', buttonSound ? buttonSound.src : 'Not found');
+
     // Ensure the sound element exists
     if (!buttonSound) {
         console.error('Button sound element not found!');
@@ -232,6 +236,8 @@ function showOneAwayBox() {
     buttonSound.currentTime = 0; // Reset the sound to the start
     buttonSound.play().catch(error => {
         console.error('Error playing nether-button.mp3:', error);
+        // Fallback: Prompt the user to interact with the page
+        alert('Please click anywhere on the page to enable sound.');
     });
 
     // Hide the box after 2 seconds
