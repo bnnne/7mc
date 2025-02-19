@@ -2,26 +2,26 @@ var categoryPriority = ['purple', 'blue', 'green', 'yellow'];
 
 var categories = {
     purple: {
-        name: "variants dependent on biome temperature",
-        words: ["skeleton", "fox", "frog", "zombie"],
+        name: "blocks that can convert to moss",
+        words: ["cave vines", "stone", "mud", "tuff"],
         color: "purple",
         solved: false
     },
     blue: {
-        name: "attacked by axolotls",
-        words: ["tropical fish", "squid", "drowned", "guardians"],
+        name: "can be used as fuel",
+        words: ["daylight sensor", "smangrove roots", "dead bush", "azalea"],
         color: "blue",
         solved: false
     },
     green: {
-        name: "immune to fire/lava",
-        words: ["strider", "ghast", "warden", "ender dragon"],
+        name: "plants/fungi that cannot be bone mealed",
+        words: ["sugar cane", "cactus", "vine", "nether wart"],
         color: "green",
         solved: false
     },
     yellow: {
-        name: "emits particles",
-        words: ["glow squid", "enderman", "blaze", "phantom"],
+        name: "can grow sugar cane on",
+        words: ["grass block", "moss block", "sand", "red sand"],
         color: "yellow",
         solved: false
     }
