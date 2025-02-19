@@ -216,31 +216,38 @@ function submitGroup() {
 
 function showOneAwayBox() {
     const oneAwayBox = document.getElementById('oneAwayBox');
-    oneAwayBox.classList.remove('hidden');
+    const buttonSound = document.getElementById('buttonSound');
+
+    // Debugging: Log the buttonSound element
+    console.log("Button Sound Element:", buttonSound);
+
+    if (!buttonSound) {
+        console.error("buttonSound element not found. Check the ID in your HTML.");
+        return;
+    }
+
+    // Reset the box state
+    oneAwayBox.classList.remove('fade-out', 'hidden');
     oneAwayBox.classList.add('fade-in');
 
-    // Play the nether-button.mp3 sound effect
-    const buttonSound = document.getElementById('buttonSound');
-    if (buttonSound) {
-        buttonSound.currentTime = 0; // Reset the sound to the start
-        buttonSound.play().catch(error => {
-            console.error('Error playing nether-button.mp3:', error);
+    // Play the sound effect
+    buttonSound.currentTime = 0; // Reset audio to start
+    buttonSound.play()
+        .then(() => {
+            console.log("Nether-button sound played successfully");
+        })
+        .catch(error => {
+            console.error("Error playing nether-button sound:", error);
         });
-    } else {
-        console.error('Sound element not found');
-    }
 
     // Hide the box after 2 seconds
     setTimeout(() => {
         oneAwayBox.classList.remove('fade-in');
         oneAwayBox.classList.add('fade-out');
-
-        // Remove the box from the DOM after the fade-out animation
         setTimeout(() => {
             oneAwayBox.classList.add('hidden');
-            oneAwayBox.classList.remove('fade-out');
-        }, 1000); // Fade-out duration
-    }, 2000); // Display duration (2 seconds)
+        }, 1000); // Match fade-out duration
+    }, 2000);
 }
 
 function handleCorrectCategory(category) {
