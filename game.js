@@ -183,36 +183,25 @@ function submitGroup() {
     if (correctCategory) {
         handleCorrectCategory(correctCategory);
     } else {
-        // Check if the player is one away (3 out of 4 words correct)
         const partialMatches = Object.values(categories).filter(cat =>
             selectedWords.filter(word => cat.words.includes(word)).length === 3
         );
 
-        console.log("Partial Matches:", partialMatches); // Debugging line
-
         if (partialMatches.length > 0) {
-            // If the player is one away, deduct a try and show the One Away Box
             handleIncorrectSubmit(); // Deduct a try
 
-            // Calculate the delay for nether-button.mp3 and the box
-            const hurtSoundDuration = soundFiles[currentSoundIndex - 1].duration * 1000; // Convert to milliseconds
-            const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
+            // Play hurt sound and calculate delay
+            const hurtSound = playNextSound();
+            const hurtSoundDuration = hurtSound.duration * 1000;
 
-            // Show the "One Away" box and play nether-button.mp3 after the delay
+            // Delay nether-button.mp3 and box
             setTimeout(() => {
-                showOneAwayBox(); // Show the box and play nether-button.mp3
-            }, hurtSoundDuration + delayAfterHurtSound);
+                showOneAwayBox();
+            }, hurtSoundDuration + 1000);
         } else {
-            // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
         }
     }
-
-    // Reset selected words and check if the game is over
-    selectedWords = [];
-    deselectAll();
-    checkGameEnd();
-}
 
 function showOneAwayBox() {
     const oneAwayBox = document.getElementById('oneAwayBox');
