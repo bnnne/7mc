@@ -9,7 +9,7 @@ var categories = {
     },
     blue: {
         name: "can be used as fuel",
-        words: ["daylight sensor", "smangrove roots", "dead bush", "azalea"],
+        words: ["daylight sensor", "mangrove roots", "dead bush", "azalea"],
         color: "blue",
         solved: false
     },
