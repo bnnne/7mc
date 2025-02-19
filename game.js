@@ -1,17 +1,44 @@
 // Debugging: Log when the script loads
 console.log("game.js loaded!");
 
-// Game State Variables
 let selectedWords = [];
 let remainingTries = 4;
-let gameActive = false; // Game is inactive until started
+let gameActive = true;
 let categoriesSolved = 0;
 let timerInterval;
 let startTime;
 
+// Function to start the timer
+function startTimer() {
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+// Function to update the timer display
+function updateTimer() {
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Time in seconds
+    const hours = Math.floor(elapsedTime / 3600);
+    const minutes = Math.floor((elapsedTime % 3600) / 60);
+    const seconds = elapsedTime % 60;
+
+    let formattedTime;
+    if (hours > 0) {
+        formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    } else {
+        formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    document.getElementById('timer').textContent = formattedTime;
+}
+
+// Function to stop the timer
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
 // Start the game when the start screen is clicked
-document.getElementById('startScreen').addEventListener('click', function () {
-    console.log("Start screen clicked!");
+document.getElementById('startScreen').addEventListener('click', function() {
+    console.log("Start screen clicked!"); // Debugging line
 
     // Hide the start screen
     document.getElementById('startScreen').style.display = 'none';
@@ -19,27 +46,29 @@ document.getElementById('startScreen').addEventListener('click', function () {
     // Show the loading screen
     document.getElementById('loadingScreen').classList.remove('hidden');
 
-    // Play portal-enter sound
+    // Play portal-enter.mp3
     const portalEnterAudio = document.getElementById('portal-enter');
     portalEnterAudio.play().catch(error => {
-        console.error('Error playing portal-enter.mp3:', error);
+        console.error('Error playing portal-enter.mp3:', error); // Debugging line
     });
 
-    // Simulate loading for 4 seconds
+    // Wait for 4 seconds (duration of the loading screen and audio)
     setTimeout(() => {
         // Hide the loading screen
         document.getElementById('loadingScreen').classList.add('hidden');
 
-        // Play portal-exit sound after a short delay
+        // Play portal-exit.mp3 after 0.2 seconds
         setTimeout(() => {
             const portalExitSound = document.getElementById('portal-exit');
+            const fireSound = document.getElementById('fireSound');
+
+            // Play portal-exit.mp3
             portalExitSound.play().catch(error => {
-                console.error('Error playing portal-exit.mp3:', error);
+                console.error('Error playing portal-exit.mp3:', error); // Debugging line
             });
 
-            // Play fire sound on loop
-            const fireSound = document.getElementById('fireSound');
-            fireSound.loop = true;
+            // Play fire.mp3 on loop
+            fireSound.loop = true; // Enable looping
             fireSound.play().catch(error => {
                 console.error('Error playing fire.mp3:', error);
             });
@@ -50,20 +79,82 @@ document.getElementById('startScreen').addEventListener('click', function () {
         initializeGame();
         startTimer();
         document.getElementById('timer').style.display = 'block';
-        gameActive = true; // Activate the game
     }, 4000);
 });
+
+// Array of sound files
+const soundFiles = [
+    document.getElementById('hurtSound1'),
+    document.getElementById('hurtSound2'),
+    document.getElementById('hurtSound3')
+];
+
+// Set animation delays on hearts initially
+document.querySelectorAll('#triesCircles .circle').forEach((circle, index) => {
+    circle.style.setProperty('--delay', `${index * 0.1}s`);
+});
+
+let currentSoundIndex = 0;
+
+// Function to play the next sound effect for mistakes
+function playNextSound() {
+    const sound = soundFiles[currentSoundIndex];
+    if (!sound) {
+        console.error("Sound file not found at index:", currentSoundIndex);
+        return;
+    }
+
+    sound.currentTime = 0; // Reset the sound to the start
+    sound.play().catch(error => {
+        console.error('Error playing hurt sound:', error);
+    });
+    currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+    return sound; // Return the sound element to access its duration
+}
+
+function handleMistake() {
+    playNextSound();
+}
+
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(error => console.error(`Error playing sound: ${error}`));
+    }
+}
+
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+        playSound('clickSound');
+    });
+});
+
+function toggleWord(word, element) {
+    if (!gameActive) return;
+
+    const index = selectedWords.indexOf(word);
+    if (index === -1) {
+        if (selectedWords.length < 4) {
+            selectedWords.push(word);
+            element.classList.add('selected');
+            playSound('selectSound');
+        }
+    } else {
+        selectedWords.splice(index, 1);
+        element.classList.remove('selected');
+        playSound('deselectSound');
+    }
+}
 
 // Initialize the game grid
 function initializeGame() {
     const gameGrid = document.getElementById('gameGrid');
     gameGrid.innerHTML = '';
 
-    // Flatten all words from categories and shuffle them
     const allWords = [].concat(...Object.values(categories).map(c => c.words));
     shuffleArray(allWords);
 
-    // Create word boxes for each word
     allWords.forEach(word => {
         const box = document.createElement('div');
         box.className = 'word-box';
@@ -82,25 +173,6 @@ function initializeGame() {
     updateTriesDisplay();
 }
 
-// Toggle word selection
-function toggleWord(word, element) {
-    if (!gameActive) return;
-
-    const index = selectedWords.indexOf(word);
-    if (index === -1) {
-        if (selectedWords.length < 4) {
-            selectedWords.push(word);
-            element.classList.add('selected');
-            playSound('selectSound');
-        }
-    } else {
-        selectedWords.splice(index, 1);
-        element.classList.remove('selected');
-        playSound('deselectSound');
-    }
-}
-
-// Submit a group of selected words
 function submitGroup() {
     if (!gameActive || selectedWords.length !== 4) return;
 
@@ -111,11 +183,66 @@ function submitGroup() {
     if (correctCategory) {
         handleCorrectCategory(correctCategory);
     } else {
-        handleIncorrectSubmit();
+        // Check if the player is one away (3 out of 4 words correct)
+        const partialMatches = Object.values(categories).filter(cat =>
+            selectedWords.filter(word => cat.words.includes(word)).length === 3
+        );
+
+        console.log("Partial Matches:", partialMatches); // Debugging line
+
+        if (partialMatches.length > 0) {
+            // If the player is one away, deduct a try and show the One Away Box
+            handleIncorrectSubmit(); // Deduct a try
+
+            // Calculate the delay for nether-button.mp3 and the box
+            const hurtSoundDuration = soundFiles[currentSoundIndex - 1].duration * 1000; // Convert to milliseconds
+            const delayAfterHurtSound = 1000; // 1 second after the hurt sound ends
+
+            // Show the "One Away" box and play nether-button.mp3 after the delay
+            setTimeout(() => {
+                showOneAwayBox(); // Show the box and play nether-button.mp3
+            }, hurtSoundDuration + delayAfterHurtSound);
+        } else {
+            // If the player is not one away, handle as a regular mistake
+            handleIncorrectSubmit();
+        }
     }
+
+    // Reset selected words and check if the game is over
+    selectedWords = [];
+    deselectAll();
+    checkGameEnd();
 }
 
-// Handle correct category submission
+function showOneAwayBox() {
+    const oneAwayBox = document.getElementById('oneAwayBox');
+    oneAwayBox.classList.remove('hidden');
+    oneAwayBox.classList.add('fade-in');
+
+    // Play the nether-button.mp3 sound effect
+    const buttonSound = document.getElementById('buttonSound');
+    if (buttonSound) {
+        buttonSound.currentTime = 0; // Reset the sound to the start
+        buttonSound.play().catch(error => {
+            console.error('Error playing nether-button.mp3:', error);
+        });
+    } else {
+        console.error('Sound element not found');
+    }
+
+    // Hide the box after 2 seconds
+    setTimeout(() => {
+        oneAwayBox.classList.remove('fade-in');
+        oneAwayBox.classList.add('fade-out');
+
+        // Remove the box from the DOM after the fade-out animation
+        setTimeout(() => {
+            oneAwayBox.classList.add('hidden');
+            oneAwayBox.classList.remove('fade-out');
+        }, 1000); // Fade-out duration
+    }, 2000); // Display duration (2 seconds)
+}
+
 function handleCorrectCategory(category) {
     category.solved = true;
     categoriesSolved++;
@@ -129,47 +256,74 @@ function handleCorrectCategory(category) {
     document.getElementById('categoriesContainer').appendChild(categoryBox);
     playSound(`${category.color}-categ`);
 
-    // Remove solved words from the grid
     const gameGrid = document.getElementById('gameGrid');
     Array.from(gameGrid.children).forEach(box => {
         if (category.words.includes(box.textContent)) {
             box.remove();
         }
     });
-
-    checkGameEnd();
 }
 
-// Handle incorrect submission
 function handleIncorrectSubmit() {
     remainingTries--;
-    updateTriesDisplay();
 
-    if (remainingTries === 0) {
-        gameActive = false;
-        document.getElementById('message').textContent = "You were probably close... or not.";
-        revealAnswers();
-    }
+    // Add blink to all hearts first
+    const circles = document.querySelectorAll('#triesCircles .circle');
+    circles.forEach(circle => circle.classList.add('blink'));
+
+    // Play the hurt sound effect for all mistakes
+    playNextSound(); // Play the hurt sound
+
+    // After blink duration, update display
+    setTimeout(() => {
+        circles.forEach(circle => circle.classList.remove('blink'));
+        updateTriesDisplay();
+
+        if (remainingTries === 0) {
+            gameActive = false;
+            document.getElementById('message').textContent = "you were prob close lol..... or not";
+            revealAnswers();
+        }
+    }, 200);
 }
 
-// Update the tries display
-function updateTriesDisplay() {
-    const circles = document.querySelectorAll('#triesCircles .circle');
-    circles.forEach((circle, index) => {
-        circle.classList.toggle('white', index >= remainingTries);
+function revealAnswers() {
+    const unsolvedCategories = Object.values(categories)
+        .filter(category => !category.solved)
+        .sort((a, b) => categoryPriority.indexOf(a.color) - categoryPriority.indexOf(b.color));
+
+    unsolvedCategories.forEach((category, index) => {
+        setTimeout(() => {
+            const gameGrid = document.getElementById('gameGrid');
+            Array.from(gameGrid.children).forEach(box => {
+                if (category.words.includes(box.textContent)) {
+                    box.remove();
+                }
+            });
+
+            const categoryBox = document.createElement('div');
+            categoryBox.className = `category-box ${category.color}`;
+            categoryBox.innerHTML = `
+                <div><strong>${category.name}</strong></div>
+                <div>${category.words.join(', ')}</div>
+            `;
+            document.getElementById('categoriesContainer').appendChild(categoryBox);
+            playSound(`${category.color}-categ`);
+        }, index * 1000);
     });
 }
 
-// Check if the game is over
-function checkGameEnd() {
-    if (categoriesSolved === 4) {
-        gameActive = false;
-        document.getElementById('message').textContent = "YAY!!! You did it!";
-        stopTimer();
-    }
+function updateTriesDisplay() {
+    const circles = document.querySelectorAll('#triesCircles .circle');
+    const shouldShake = remainingTries === 1;
+    
+    circles.forEach((circle, index) => {
+        const isLost = index >= remainingTries;
+        circle.classList.toggle('white', isLost);
+        circle.classList.toggle('shake', shouldShake);
+    });
 }
 
-// Shuffle the words in the grid
 function shuffleWords() {
     if (!gameActive) return;
 
@@ -180,7 +334,6 @@ function shuffleWords() {
     boxes.forEach(box => gameGrid.appendChild(box));
 }
 
-// Deselect all selected words
 function deselectAll() {
     selectedWords = [];
     document.querySelectorAll('.word-box').forEach(box => {
@@ -188,19 +341,17 @@ function deselectAll() {
     });
 }
 
-// Utility function to shuffle an array
+function checkGameEnd() {
+    if (categoriesSolved === 4) {
+        gameActive = false;
+        document.getElementById('message').textContent = "YAY!!! u did it :D didn't think u could honestly";
+        stopTimer(); // Stop the timer when the game ends
+    }
+}
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-// Play a sound by ID
-function playSound(soundId) {
-    const sound = document.getElementById(soundId);
-    if (sound) {
-        sound.currentTime = 0;
-        sound.play().catch(error => console.error(`Error playing sound: ${error}`));
     }
 }
