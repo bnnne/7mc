@@ -211,33 +211,25 @@ function showOneAwayBox() {
     const oneAwayBox = document.getElementById('oneAwayBox');
     const buttonSound = document.getElementById('buttonSound');
 
-    // Ensure the sound element exists
-    if (!buttonSound) {
-        console.error('Button sound element not found!');
-        return;
-    }
-
-    // Show the box and play the sound
+    // Show the box and play sound simultaneously
     oneAwayBox.classList.remove('hidden');
     oneAwayBox.classList.add('fade-in');
-
-    // Play the button sound
-    buttonSound.currentTime = 0; // Reset the sound to the start
+    
+    // Play sound immediately when box appears
+    buttonSound.currentTime = 0;
     buttonSound.play().catch(error => {
         console.error('Error playing nether-button.mp3:', error);
     });
 
-    // Hide the box after 2 seconds
+    // Keep the rest of the timing the same
     setTimeout(() => {
         oneAwayBox.classList.remove('fade-in');
         oneAwayBox.classList.add('fade-out');
-
-        // Remove the box from the DOM after the fade-out animation
         setTimeout(() => {
             oneAwayBox.classList.add('hidden');
             oneAwayBox.classList.remove('fade-out');
-        }, 1000); // Fade-out duration
-    }, 2000); // Display duration (2 seconds)
+        }, 1000);
+    }, 2000);
 }
 
 function handleCorrectCategory(category) {
