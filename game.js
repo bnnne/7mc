@@ -201,7 +201,7 @@ function submitGroup() {
             // Show the "One Away" box and play nether-button.mp3 after the delay
             setTimeout(() => {
                 showOneAwayBox(); // Show the box and play nether-button.mp3
-            }, 500); // 500ms = 0.5 seconds
+            }, 400); // 400ms = 0.4 seconds
         } else {
             // If the player is not one away, handle as a regular mistake
             handleIncorrectSubmit();
