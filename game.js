@@ -60,7 +60,6 @@ document.getElementById('startScreen').addEventListener('click', function() {
         // Play portal-exit.mp3 after 0.2 seconds
         setTimeout(() => {
             const portalExitSound = document.getElementById('portal-exit');
-            const fireSound = document.getElementById('fireSound');
 
             // Play portal-exit.mp3
             portalExitSound.play().catch(error => {
