@@ -66,12 +66,6 @@ document.getElementById('startScreen').addEventListener('click', function() {
             portalExitSound.play().catch(error => {
                 console.error('Error playing portal-exit.mp3:', error); // Debugging line
             });
-
-            // Play fire.mp3 on loop
-            fireSound.loop = true; // Enable looping
-            fireSound.play().catch(error => {
-                console.error('Error playing fire.mp3:', error);
-            });
         }, 200);
 
         // Show the game content and start the game
